@@ -634,7 +634,7 @@
 				list-style: none;
 				padding-left: 0;
 			}
-			
+
 			ul.actions li {
 				display: inline-block;
 				padding: 0 1em 0 0;
@@ -1131,7 +1131,7 @@
 /* Footer */
 
 	#footer {
-		padding: 8em 0 6em 0;
+		padding: 2em 0 2em 0;
 		background: #f6f6f6;
 		color: #aaa;
 		text-align: center;

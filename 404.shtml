@@ -3,7 +3,7 @@
 	Spatial by TEMPLATED
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
-    Modified and re-coding by Bryan Tong (btong.me) for personal use.
+	Modified and re-coding by Bryan Tong (btong.me) for personal use.
 -->
 <html>
 	<head>
@@ -12,7 +12,7 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
-    <link rel="shortcut icon" href="/images/favicon.png" type="image/png" />
+    	<link rel="shortcut icon" href="/images/favicon.png" type="image/png" />
 		<script src="js/jquery.min.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
@@ -22,10 +22,10 @@
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-xlarge.css" />
 		</noscript>
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Bryan Tong" />
-    <meta property="og:description" content="The personal homepage of Bryan Tong." />
-    <meta property="og:image" content="http://btong.me/images/favicon.png" />
+	    <meta property="og:type" content="website" />
+	    <meta property="og:title" content="Bryan Tong" />
+	    <meta property="og:description" content="The personal homepage of Bryan Tong." />
+	    <meta property="og:image" content="http://btong.me/images/favicon.png" />
 		<script src="/google_analytics_auto.js"></script>
 	</head>
 	<body class="landing">
@@ -42,22 +42,24 @@
 			<!-- Footer -->
 			<footer id="footer">
 				<div class="container">
+					<!-- Temporarily Removed
 					<ul class="icons">
 						<li><a href="#" class="icon fa-facebook"></a></li>
 						<li><a href="#" class="icon fa-twitter"></a></li>
 						<li><a href="#" class="icon fa-instagram"></a></li>
-						<li><a href="#" class="icon fa-github"></a></li>
+            			<li><a href="#" class="icon fa-github"></a></li>
 						<li><a href="https://www.linkedin.com/in/tongbryan" class="icon fa-linkedin"></a></li>
-						</ul>
+				    </ul>
+				    -->
 					<ul class="copyright">
 						<li>Copyright &copy; 2016 Bryan Tong</li>
 					</ul>
 					<ul class="copyright">
 						<li>Testing on <a href="https://pages.github.com/" class="icon fa-github"></a> GitHub Pages</li>
-						<li><a href="changelog.html">R4.3</a>
+						<li><a href="changelog.html">R4.4</a>
 						<li>Modified from: <a href="http://templated.co">TEMPLATED</a></li>
 					</ul>
 				</div>
 			</footer>
-		</body>
-		</html>
+	</body>
+</html>
