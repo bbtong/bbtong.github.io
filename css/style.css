@@ -1061,7 +1061,7 @@
 /* Banner */
 
 	#banner {
-		padding: 16em 0 13em 0;
+		padding: 10em 0 8em 0;
 		background-attachment: fixed;
 		background-image: url("images/overlay.png"), url("../images/banner.png");
 		background-position: center top;
@@ -1102,7 +1102,7 @@
 /* Wrapper */
 
 	.wrapper {
-		padding: 6em 0 4em 0;
+		padding: 4em 0 4em 0;
 	}
 
 		.wrapper.style2 {
