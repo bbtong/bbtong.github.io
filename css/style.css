@@ -1081,6 +1081,12 @@
 			line-height: 1.35;
 			margin-bottom: 0.5em;
 		}
+		
+			img {
+				max-width: 600px;
+				width: 90%;
+				height: auto;
+				}
 
 		#banner p {
 			color: #aaa;
