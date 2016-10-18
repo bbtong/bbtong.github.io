@@ -1096,6 +1096,11 @@
 			text-transform: uppercase;
 		}
 
+		#banner p.class2 {;
+			margin-top: 0em;
+			margin-bottom: 0em;
+		}
+
 	body.is-touch #banner {
 		background-attachment: scroll;
 	}
