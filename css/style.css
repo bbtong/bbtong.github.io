@@ -542,12 +542,12 @@
 			}
 
 		.image.rounded {
-			border-radius: 5%;
+			border-radius: 100%;
 		}
 
 			.image.rounded img {
 				border: solid 0.2em rgba(144, 144, 144, 0.25);
-				border-radius: 5%;
+				border-radius: 100%;
 			}
 
 		.image.captioned {
@@ -1163,7 +1163,7 @@ body.is-touch #spotid {
 
 		.wrapper.style3 {
 			background-attachment: fixed;
-			background-image: url("images/overlay.png"), url("../images/banner.png");
+			background-image: url("images/overlay.png"), url("../images/banner.jpg");
 			background-position: center center;
 			background-size: cover;
 		}
