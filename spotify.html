@@ -31,25 +31,34 @@
 
 		<!-- Header -->
 			<header id="header" class="alt">
-				<h1><strong><a href="index.html">Codename:</a></strong>How are you feeling?</h1>
+				<h1>
+					<script type="text/javascript">
+					var i = Math.floor((Math.random() * 9))
+                    var ar = new Array(10)
+					ar[0] = "Nothing to listen to?"
+					ar[1] = "What do you want to listen to?"
+					ar[2] = "Any song in mind?"
+					ar[3] = "Bored of your playlist?"
+					ar[4] = "Wish there were more songs like that?"
+					ar[5] = "Tired of the radio?"
+					ar[6] = "Wish someone had similar music taste?"
+					ar[7] = "Want an easier way to find songs?"
+					ar[8] = "Tired of bad suggestions?"
+					ar[9] = "What music do you like?"
+                     document.write(ar[i]);
+                    </script>
+				</h1>
 				<nav id="nav">
 					<ul>
 						<li><a href="index.html">Home</a></li>
-						<!--
-						<li><a href="http://blog.btong.me/">Blog</a></li>
-						<li><a href="about.html">About</a></li>
-						<li><a href="projects.html">Projects</a></li>
-						<li><a href="classes.html">Classes</a></li>				
-						<li><a href="index.html#contact">Contact</a></li>
-						-->
 					</ul>
 				</nav>
 			</header>
 
 		<!-- Banner -->
 			<section id="spotid">
-				<h2>Spotify Data Project</h2>
-				<p>WIP</p>
+				<h2>Spotify Project</h2>
+				<p>Spotify Song Suggestor by Neural Network Analysis</p>
 			</section>
 
 		<!-- Main -->
@@ -57,7 +66,8 @@
 					<div class="container">
 						<header class="major">
 							<h2>Coming Soon</h2>
-							<p>WIP Spotify Song Suggestor based on Neural Network in Python</p>
+							<p>A smart, learning Spotify Song Suggestor<br />based on neural networks and data analysis.</p>
+							<img src="images/sdiagram.png" alt="Concept Flowchart" style="height: 75; width: 75%; object-fit: contain"/>
 						</header>
 						<ul class="actions">
 						<ul>
