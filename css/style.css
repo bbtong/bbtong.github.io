@@ -1203,7 +1203,7 @@ body.is-touch #diceid {
 
 		.wrapper.style3 {
 			background-attachment: fixed;
-			background-image: url("images/overlay.png"), url("../images/banner.jpg");
+			background-image: url("images/overlay.png"), url("../images/bannerBlue.png");
 			background-position: center center;
 			background-size: cover;
 		}
