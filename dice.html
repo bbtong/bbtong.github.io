@@ -73,6 +73,237 @@
 				<div class="container">
 
 
+					<form method="post" action="" name="diceform">
+					<body onload="reset()">
+					    <td> 
+					        <table style="float:none">
+					        	<!-- Header row -->
+								<tr>
+									<th style="text-align: center;" valign="bottom"><strong>Die Type</strong></th>
+									<th style="text-align: center;" valign="bottom"><strong>Amount</strong></th>
+									<th style="text-align: center;" valign="bottom"><strong>+ / -</strong></th>
+									<th style="text-align: center;" valign="bottom"><strong>Modifier</strong></th>
+									<th style="text-align: center;" valign="bottom"><strong>Roll the Dice!</strong></th>
+									<th style="text-align: center;" valign="bottom"><strong>Result</strong></font></th>
+
+									<!-- The script for displaying running total... add text here somehow? -->
+									<td rowspan="10"><br>
+						            	<textarea name="runningtotal" cols="20" rows="20"></textarea>
+								    	<script type="text/javascript">
+											document.diceform.runningtotal.value = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nThe uppermost role displayed is your latest.\nGive it a try!"
+										</script>            
+						            </td>
+								</tr>
+
+					        	<!-- d4 row -->
+					        	<tr> 
+						            <td style="text-align: center;">
+						            	<a onClick="rolld4()"><img src="images/d4.png" width="40" height="40" alt="d4" name="d4"></a>d4
+						            </td>
+
+						            <td> 
+						            	<input type="text" name="amountd4" size="5" value="1">
+						            </td>
+
+						            <td style="text-align: center;">
+						            	<input type="radio" id="plus" name="d4m" value="P" class="radioStyle" /><label for="plus">+</label>
+						            	<input type="radio" id="minus" name="d4m" value="M" class="radioStyle" /><label for="minus">-</label>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d4mo" size="5" value="0">
+						            </td>
+
+						            <td style="text-align: center;">
+						        		<a class="button sdice small" href="javascript:void(null)" onClick="rolld4()">Roll</a>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d4r" size="5">
+						            </td>
+
+					        	</tr>
+
+					        	<!-- d100 row -->
+					        	<tr> 
+						            <td style="text-align: center;">
+						            	<a onClick="rolld100()"><img src="images/d100.png" width="40" height="40" alt="d100" name="d100"></a>d100
+						            </td>
+
+						            <td> 
+						            	<input type="text" name="amountd100" size="5" value="1">
+						            </td>
+
+						            <td style="text-align: center;">
+						            	<input type="radio" id="plus" name="d100m" value="P" class="radioStyle" /><label for="plus">+</label>
+						            	<input type="radio" id="minus" name="d100m" value="M" class="radioStyle" /><label for="minus">-</label>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d100mo" size="5" value="0">
+						            </td>
+
+						            <td style="text-align: center;">
+						        		<a class="button sdice small" href="javascript:void(null)" onClick="rolld100()">Roll</a>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d100r" size="5">
+						            </td>
+
+					        	</tr>
+
+					        	<!-- d8 row -->
+					        	<tr> 
+						            <td style="text-align: center;">
+						            	<a onClick="rolld8()"><img src="images/d8.png" width="40" height="40" alt="d8" name="d8"></a>d8
+						            </td>
+
+						            <td> 
+						            	<input type="text" name="amountd8" size="5" value="1">
+						            </td>
+
+						            <td style="text-align: center;">
+						            	<input type="radio" id="plus" name="d8m" value="P" class="radioStyle" /><label for="plus">+</label>
+						            	<input type="radio" id="minus" name="d8m" value="M" class="radioStyle" /><label for="minus">-</label>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d8mo" size="5" value="0">
+						            </td>
+
+						            <td style="text-align: center;">
+						        		<a class="button sdice small" href="javascript:void(null)" onClick="rolld8()">Roll</a>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d8r" size="5">
+						            </td>
+
+					        	</tr>
+
+					        	<!-- d10 row -->
+					        	<tr> 
+						            <td style="text-align: center;">
+						            	<a onClick="rolld10()"><img src="images/d10.png" width="40" height="40" alt="d10" name="d10"></a>d10
+						            </td>
+
+						            <td> 
+						            	<input type="text" name="amountd10" size="5" value="1">
+						            </td>
+
+						            <td style="text-align: center;">
+						            	<input type="radio" id="plus" name="d10m" value="P" class="radioStyle" /><label for="plus">+</label>
+						            	<input type="radio" id="minus" name="d10m" value="M" class="radioStyle" /><label for="minus">-</label>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d10mo" size="5" value="0">
+						            </td>
+
+						            <td style="text-align: center;">
+						        		<a class="button sdice small" href="javascript:void(null)" onClick="rolld10()">Roll</a>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d10r" size="5">
+						            </td>
+
+					        	</tr>
+
+					        	<!-- d12 row -->
+						        <tr> 
+						            <td style="text-align: center;">
+						            	<a onClick="rolld12()"><img src="images/d12.png" width="40" height="40" alt="d12" name="d12"></a>d12
+						            </td>
+
+						            <td> 
+						            	<input type="text" name="amountd12" size="5" value="1">
+						            </td>
+
+						            <td style="text-align: center;">
+						            	<input type="radio" id="plus" name="d12m" value="P" class="radioStyle" /><label for="plus">+</label>
+						            	<input type="radio" id="minus" name="d12m" value="M" class="radioStyle" /><label for="minus">-</label>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d12mo" size="5" value="0">
+						            </td>
+
+						            <td style="text-align: center;">
+						        		<a class="button sdice small" href="javascript:void(null)" onClick="rolld12()">Roll</a>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d12r" size="5">
+						            </td>
+
+					        	</tr>
+
+					        	<!-- d20 row -->
+					        	<tr> 
+						            <td style="text-align: center;">
+						            	<a onClick="rolld20()"><img src="images/d20.png" width="40" height="40" alt="d20" name="d20"></a>d20
+						            </td>
+
+						            <td> 
+						            	<input type="text" name="amountd20" size="5" value="1">
+						            </td>
+
+						            <td style="text-align: center;">
+						            	<input type="radio" id="plus" name="d20m" value="P" class="radioStyle" /><label for="plus">+</label>
+						            	<input type="radio" id="minus" name="d20m" value="M" class="radioStyle" /><label for="minus">-</label>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d20mo" size="5" value="0">
+						            </td>
+
+						            <td style="text-align: center;">
+						        		<a class="button sdice small" href="javascript:void(null)" onClick="rolld20()">Roll</a>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d20r" size="5">
+						            </td>
+
+					        	</tr>
+
+					        	<!-- d100 row -->
+					        	<tr> 
+						            <td style="text-align: center;">
+						            	<a onClick="rolld100()"><img src="images/d100.png" width="40" height="40" alt="d100" name="d100"></a>d100
+						            </td>
+
+						            <td> 
+						            	<input type="text" name="amountd100" size="5" value="1">
+						            </td>
+
+						            <td style="text-align: center;">
+						            	<input type="radio" id="plus" name="d100m" value="P" class="radioStyle" /><label for="plus">+</label>
+						            	<input type="radio" id="minus" name="d100m" value="M" class="radioStyle" /><label for="minus">-</label>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d100mo" size="5" value="0">
+						            </td>
+
+						            <td style="text-align: center;">
+						        		<a class="button sdice small" href="javascript:void(null)" onClick="rolld100()">Roll</a>
+						            </td>
+
+						            <td style="text-align: center;"> 
+						            	<input type="text" name="d100r" size="5">
+						            </td>
+
+					        	</tr>
+
+					        </table>
+						</table>
+					</form>
+				</div>
+			</section>
+
        	<!-- Footer -->
 			<footer id="footer">
 				<div class="container">

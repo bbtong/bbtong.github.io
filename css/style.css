@@ -903,6 +903,30 @@
 				background-color: #007FCE;
 			}
 
+		/* For the Dice Roller's table buttons. */
+		input[type="submit"].sdice,
+		input[type="reset"].sdice,
+		input[type="button"].sdice,
+		.button.sdice {
+			background-color: #ff7809;
+			color: #ffffff !important;
+			line-height: 3.25em;
+		}
+
+			input[type="submit"].sdice:hover,
+			input[type="reset"].sdice:hover,
+			input[type="button"].sdice:hover,
+			.button.sdice:hover {
+				background-color: #ff4b00;
+			}
+
+			input[type="submit"].sdice:active,
+			input[type="reset"].sdice:active,
+			input[type="button"].sdice:active,
+			.button.sdice:active {
+				background-color: #660000;
+			}
+
 		input[type="submit"].disabled, input[type="submit"]:disabled,
 		input[type="reset"].disabled,
 		input[type="reset"]:disabled,
