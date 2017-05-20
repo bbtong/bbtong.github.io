@@ -2704,7 +2704,7 @@
 		display: block;
 		width: 2em;
 		height: 1px;
-		border-top: solid 1px;
+		/*border-top: solid 0px ORIGINALLY 1, FIX MORE LATER TO MAKE NICE. */
 		margin: 0 0 1em 0;
 	}
 
@@ -2721,6 +2721,11 @@
 			margin-left: auto;
 			margin-right: auto;
 		}
+
+			section.lined {
+				border-top: solid 1px;
+			}
+
 
 	section.special, article.special {
 		text-align: center;
