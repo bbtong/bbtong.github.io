@@ -2852,7 +2852,7 @@
 
 		.spotlight .image {
 			margin: 0 0 0 2em;
-			width: 50%;
+			width: 25%;
 			-ms-flex: 1;
 		}
 
@@ -2862,7 +2862,7 @@
 
 		.spotlight .content {
 			margin: 0 2em 0 0;
-			width: 50%;
+			width: 75%;
 			-ms-flex: 1;
 		}
 
@@ -2962,7 +2962,7 @@
 /* Wrapper */
 
 	.wrapper {
-		padding: 7.5em 0 5.5em 0 ;
+		padding: 3em 0 3em 0 ;
 	}
 
 		.wrapper > .inner {

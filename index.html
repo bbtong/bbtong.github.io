@@ -27,18 +27,20 @@
 
 		<!-- Google stuff -->
 		<script src="/google_analytics_auto.js"></script>
-		<script src='https://www.google.com/recaptcha/api.js'></script>
+		<script src="https://www.google.com/recaptcha/api.js"></script>
 	</head>
+	
+	<!-- Begin content -->
 	<body>
 
 		<!-- Header -->
-			<header id="header">
-				<nav>
-					<ul>
-						<li><a href="#menu">Menu</a></li>
-					</ul>
-				</nav>
-			</header>
+		<header id="header">
+			<nav>
+				<ul>
+					<li><a href="#menu">Menu</a></li>
+				</ul>
+			</nav>
+		</header>
 
 		<!-- Menu -->
 			<nav id="menu">
@@ -67,40 +69,43 @@
 								<header>
 									<h1>Bryan Tong</h1>
 									<p style="margin:0;">Co-founder of Whitespace AR</p>
-									<p style="margin:0;">CS61A Course Staff @ UC Berkeley</p>
+									<p style="margin:0;">CS370 Head TA @ UC Berkeley</p>
 									<p style="margin:0;">President of Virtual Reality @ Berkeley</p>
 								</header>
-								<!--<footer>
-									<ul class="actions">
-										<li><a href="#" class="button big">About Me</a></li>
-									</ul>
-								</footer>-->
+								
+								<ul style="padding:1em 0em;">
+									<a href="resume.pdf" class="button big">Resume</a></ul>
 							</div>
 						</div>
 					</section>
 
 				<!-- One -->
 					<section class="wrapper style2 special">
-						<div class="inner">
+						<div class="inner" style="max-width: 800px;">
 							<header>
-								<h2>About Me</h2>
+								<h2>My Background</h2>
 							</header>
+        					
 							<ul class="icons major style2">
 							<p>
-							<i><script type="text/javascript">
-					            var d = new Date();
-					            var time = d.getHours();
-					            if (time < 12) {
-					            	document.write("Good morning!");
-					            } else if (time >= 12 && time < 18) {
-					            	document.write("Good afternoon!");
-					            } else {
-					            	document.write("Good evening!");
-					            }
-        					</script> </i> I'm Bryan, a Bay Area native and current student at the University of California, Berkeley, pursuing a degree in Computer Science and Cognitive Science.  I've been dabbling in VR/AR, AR, HCI, and random hardware tinkering, though I plan to eventually pursue an MBA. Living and working in the local tech community is my dream, though I'd like to also run a boba cafe.</p>
-        					<p>Recently, I've also been doing a <a href="https://www.youtube.com/bryantongc" >YouTube channel</a> with some fun application-based coding tutorials.  This semester, I'm also a tutor for both CS 61A and CS 61C!<footer>
+							<em>
+								<script type="text/javascript">
+						            var d = new Date();
+						            var time = d.getHours();
+						            if (time < 12) {
+						            	document.write("Good morning!");
+						            } else if (time >= 12 && time < 18) {
+						            	document.write("Good afternoon!");
+						            } else {
+						            	document.write("Good evening!");
+						            }
+        						</script>
+        					</em> I'm Bryan, a Bay Area native and current student at the University of California, Berkeley.  I've been dabbling in VR/AR, full-stack, and random hardware dev, though lately I've been involved with leadership, PM, and investing roles.</p>
+        					
+        					<p>Living and working in the local tech community is my dream, though I'd like to also run a boba cafe.  Sometimes, I upload nerdy stuff to my <a href="https://www.youtube.com/bryantongc" >YouTube channel</a>.
+        					
+        					<footer>
 								<ul class="actions">
-									<li><a href="resume.pdf" class="button big">Resume</a></li>
 									<li><a href="about.html" class="button">More Bio</a></li>
 								</ul>
 							</footer>
@@ -110,17 +115,34 @@
 				<!-- Two -->
 					<section class="wrapper style1 special">
 						<div class="inner">
+
 							<header>
 								<h2>Projects &amp; Experience</h2>
 								<p>A brief overview</p>
 							</header>
+
 							<section class="spotlight">
+								<span class="image"><img src="images/cs370.png" alt="VRAB" /></span>
+								<div class="content">
+									<header>
+										<h3><em>Head TA</em><br />CS370, Summer 2018</h3>
+									</header>
+									<p>This summer, I'm co-teaching and developing course software for CS370, one of two official CS pedagogy classes offered at UC Berkeley.  I'm working on a web-deployed scheduling app to match tutors to students, written with Python and Flask.  </p>
+									<footer>
+										<ul class="actions">
+											<li><a href="http://vr.berkeley.edu/" class="button">Details</a></li>
+										</ul>
+									</footer>
+								</div>
+							</section>
+
+							<section class="spotlight lined">
 								<span class="image"><img src="images/whitespace.png" alt="Whitespace" /></span>
 								<div class="content">
 									<header>
-										<h3>Co-founder and Developer<br />Whitespace</h3>
+										<h3><em>Co-founder and Developer</em><br />Whitespace</h3>
 									</header>
-									<p>I'm one of four co-founders and the AR / VR / web developer for Whitespace, a startup looking to revolutionize online canvas shopping with a personal, futuristic touch.</p>
+									<p>I'm one of four co-founders and developers for Whitespace AR, a startup looking to revolutionize online canvas shopping with a personal, futuristic touch.  Available for iOS.</p>
 									<footer>
 										<ul class="actions">
 											<li><a href="http://trywhitespace.com/" class="button">Details</a></li>
@@ -128,11 +150,12 @@
 									</footer>
 								</div>
 							</section>
+
 							<section class="spotlight lined">
 								<span class="image"><img src="images/nokia.jpeg" alt="NBL" /></span>
 								<div class="content">
 									<header>
-										<h3>Software Engineering Intern<br />Nokia Bell Labs</h3>
+										<h3><em>Software Engineering Intern</em><br />Nokia Bell Labs</h3>
 									</header>
 									<p>Last summer, I was Software Engineering Intern for Nokia Bell Labs.  I worked on sweet enterprise-scale apps, using React.js, ARKit, and more.</p>
 									<footer>
@@ -142,35 +165,22 @@
 									</footer>
 								</div>
 							</section>
-							<section class="spotlight lined">
-								<span class="image"><img src="images/vrab.png" alt="VRAB" /></span>
-								<div class="content">
-									<header>
-										<h3>President<br />Virtual Reality at Berkeley</h3>
-									</header>
-									<p>Last semester semester, I was Project Lead for VR@B's Augmented Reality Textbooks project.  In the past, we brought a full-color, augmented reality version of <i>The Giving Tree</i> to life complete with animations and audio narriation.  Now, I'm advancing onto President of VR@B, prioritizing our educational and consulting branches.</p>
-									<footer>
-										<ul class="actions">
-											<li><a href="http://vr.berkeley.edu/" class="button">Details</a></li>
-										</ul>
-									</footer>
-								</div>
-							</section>
-							<header>
-								<h2>More Projects</h2>
-								<p>I have many, many more various projects ranging from extensions, games, and gritty technical stuff!</p>
-							</header>
-								<ul class="actions">
-									<li><a href="projects.html" class="button">Discover More Projects</a></li>
-								</ul>
 
-							<ul class="icons major style2">
-								<li><span class="icon fa-code"><span class="label">Coder</span></span></li><li>
-								<span class="icon fa-gamepad"><span class="label">Gamer</span></span></li><li>
-								<span class="icon fa-paint-brush"><span class="label">Arist</span></span></li><li>
-								<span class="icon fa-camera-retro"><span class="label">Snapchatter</span></span></li><li>
-								<span class="icon fa-briefcase"><span class="label">Traveler</span></span></li>
+							<ul class="actions">
+								<li><a href="projects.html" class="button">Discover More Projects</a></li>
+								</li><li>
 							</ul>
+
+							<!-- <ul class="icons major style2">
+								<li>
+									!!! <span class="icon fa-code"><span class="label">Coder</span></span></li><li>
+									<span class="icon fa-gamepad"><span class="label">Gamer</span></span></li><li>
+									<span class="icon fa-paint-brush"><span class="label">Arist</span></span></li><li>
+									<span class="icon fa-camera-retro"><span class="label">Snapchatter</span></span></li><li>
+									<span class="icon fa-briefcase"><span class="label">Traveler</span></span>
+								</li>
+							</ul>
+							-->
 						</div>
 					</section>
 
@@ -188,7 +198,7 @@
 									<!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
 									<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
 									<li><a href="#" class="icon fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>-->
-									<li><a href="http://bbtong.github.com/" class="icon fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="https://github.com/bbtong" class="icon fa-github"><span class="label">GitHub</span></a></li>
 								</ul>
 							</section>
 							<section>
