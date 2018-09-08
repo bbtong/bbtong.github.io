@@ -4,6 +4,8 @@
 	Reflex by Pixelarity
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
+
+	Some kinda old stuff.  I'm looking for a full-time job, I can do cooler stuff than this if you let me! :)
 -->
 <html>
 	<head>
@@ -69,26 +71,33 @@
 							</header>
 						</div>
 						<div>
-						<p>Click the button to trigger a function that will output "Hello World" in a p element with id="demo".</p>
+						<script type="text/javascript">
 
-							<button onclick="myFunction()">Click me</button>
+							function loadFile(filename) {
+								var reader = new FileReader();
+								reader.onload = (function(theFile) {
+								    return function(e) {
+								        console.log(e.target.result);
+								    };
+								})(file_path);
 
-							<p id="demo"></p>
-
-							<script>
-							function myFunction() {
-							    document.getElementById("demo").innerHTML = "Hello World";
+								var file_path = filename;
+								var file_parts = [
+								    new Blob(['you construct a file...'],{type: 'text/plain'}), 
+								    'Same way as you do with blob',
+								    new Uint16Array([33])
+								];
+								var file = new File(file_parts, file_path);
+								var readString = reader.readAsText(file);
+								return readString;
 							}
-							</script>
-						<p>Click the button generate a random jURL.</p>
-						<button onclick="genRandomURL()">Click me</button>
-						<p id="display"></p>
-							<!-- JS URL Gen Script -->
-							<script>
+
 							function genRandomURL() {
 								var jWord = getJapaneseWord();
 								var eWord = getEnglishWord();
 								//var url = jWord + eWord;
+								console.log(jWord);
+								console.log(eWord);
 							    document.getElementById("display").innerHTML = "hi";
 							}
 
@@ -103,19 +112,31 @@
 							}
 
 							function getRandomWord(filename){
-							    FileHelper.readStringFromFileAtPath = function(filename)
-							    {
-							        var request = new XMLHttpRequest();
-							        request.open("GET", filename, false);
-							        request.send(null);
-							        var returnValue = request.responseText;
-							        return returnValue;
-							    }
+								var fileAsString = loadFile(filename);
+								console.log(fileAsString);
+								var res = fileAsString.split(" "); 
+								console.log(res);
+								var length = res.length - 1;
+								console.log(length);
+								var randomIndex = getRandomInt(0, res.length);
+								console.log(randomIndex);
+								return res[randomIndex];
 							}
-							var text = FileHelper.readStringFromFileAtPath ( "mytext.txt" );
-							return ;
 
-							</script>
+							/* Via StackOverflow. */
+							function getRandomInt(min, max) {
+							    return Math.floor(Math.random() * (max - min + 1)) + min;
+							}
+
+							function myFunction() {
+							    document.getElementById("demo").innerHTML = "Hello World";
+							}
+						</script>
+
+						<p>Click the button generate a random jURL.</p>
+						<button onclick="genRandomURL()">Click me</button>
+						<p id="display"></p>
+							
 						</div>
 					</section>
 
