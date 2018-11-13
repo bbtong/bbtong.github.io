@@ -161,9 +161,15 @@ p {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  color: #1EAEDB; }
+  text-decoration: none;
+  color: rgb(164, 221, 238);
+  transition: all .3s cubic-bezier(.2, 0, 0, 1);
+  z-index: 1;
+}
+  
 a:hover {
-  color: #0FA0CE; }
+  color: #0FA0CE; 
+}
 
 
 /* Buttons
@@ -401,6 +407,7 @@ hr {
   color:#757575;
 }
 
+
 #sliding-div {
   color:Green;
   background-color:#eee;
@@ -412,6 +419,8 @@ hr {
   margin: 15px;
   font-size: 0.917em;
 }
+
+
 
 
 

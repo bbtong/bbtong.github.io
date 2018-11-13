@@ -22,6 +22,7 @@
   <!-- CSS  -->
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/slider.css">
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/favicon.png">
   <!-- Google stuff -->
@@ -62,26 +63,13 @@
 
         <!-- Buttons! Yay buttons! -->
         <a class="button" href="/resume.pdf">Resume</a>
-        <a class="button" class="sliding">Contact</a>
+        <!-- <a href="#0" class="button js-cd-panel-trigger" data-panel="main">Contact</a> -->
       </div>
     </div>
   </div>
 
 <!-- End Document -->
 </body>
-
-<script>
-// jQuery script
-$(".sliding").click(function () {
-// Set the effect type
-var effect = 'slide';
-// Set the options for the effect type chosen
-var options = { direction: "right" };
-// Set the duration (default: 400 milliseconds)
-var duration = 500;
-$('#sliding-div').toggle(effect, options, duration);
-});
-</script>
 
 <script>
 // BEGIN H4 TEXT SCRAMBLER (s/o to CodePen, https://codepen.io/khalilliu/pen/RKvZKX)
