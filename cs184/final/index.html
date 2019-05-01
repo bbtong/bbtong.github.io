@@ -56,7 +56,9 @@
 						<p>We conducted much of our premilinary research via reading published, highly-cited papers.  Attached via <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4929111/">this source</a> is one such paper, of which we will summarize the results proving performance analysis comparisons between different surface reconstruction algorithms we were considering prior to implementation.
 						</p>
 						<p>
-						In the paper, tangent-plane estimation, PCA, Tight Cocone, and Power Crust algorithms / methods are all quickly dismissed for having too many issues handling noisy and/or low-density point clouds, or they simply have poor runtimes.
+						In the paper, tangent-plane estimation, PCA, Tight Cocone, and Power Crust algorithms / methods are all quickly dismissed for having too many issues handling noisy and/or low-density point clouds, or they simply have poor runtimes.  Ball-Pivoting algorithm and Poisson surface reconstruction performed better, albeit Ball-Pivoting required parallelization optimizations to perform better.  Following the TA's recommendation to not pursue Poisson, we are left with Ball-Pivoting algorithm (hereinafter defined as BPA) to consider.
+						</p>
+						<p>
 						</p>
 					</section>
 
