@@ -53,13 +53,27 @@
 						</p>
 						<p>After receiving feedback on our proposal, we quickly scrapped the idea of using Poisson-related algorithms.  We narrowed down our first algorithm to explore in-depth to be the Ball-Pivoting algorithm, as it seemed to be well-documented and cleanly applicable.
 						</p>
-						<p>We conducted much of our premilinary research via reading published, highly-cited papers.  Attached via <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4929111/">this source</a> is one such paper, of which we will summarize the results proving performance analysis comparisons between different surface reconstruction algorithms we were considering prior to implementation.
+						<p>We conducted much of our premilinary research via reading published, highly-cited papers. The following bullet points list the papers we reference in this section:
+						<ul>
+							<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4929111/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4929111/</a></li>
+							<li><a href="https://www.cs.jhu.edu/~misha/Fall13b/Notes/Bernardini99.notes.pdf">https://www.cs.jhu.edu/~misha/Fall13b/Notes/Bernardini99.notes.pdf</a></li>
+							<li><a href="https://lidarwidgets.com/samples/bpa_tvcg.pdf">https://lidarwidgets.com/samples/bpa_tvcg.pdf</a></li>
+							<li><a href="https://vgc.poly.edu/~csilva/papers/tvcg99.pdf">https://vgc.poly.edu/~csilva/papers/tvcg99.pdf</a></li>
+						</ul>
+						From these, we will summarize the results proving performance analysis comparisons between different surface reconstruction algorithms we were considering prior to implementation.
 						</p>
 						<p>
 						In the paper, tangent-plane estimation, PCA, Tight Cocone, and Power Crust algorithms / methods are all quickly dismissed for having too many issues handling noisy and/or low-density point clouds, or they simply have poor runtimes.  Ball-Pivoting algorithm and Poisson surface reconstruction performed better, albeit Ball-Pivoting required parallelization optimizations to perform better.  Following the TA's recommendation to not pursue Poisson, we are left with Ball-Pivoting algorithm (hereinafter defined as BPA) to consider.
 						</p>
 						<p>
+						The <strong>Ball-Pivoting Algorithm (BPA)</strong> is considered to be an efficient surface reconstruction method (with optimization applied).  At a high level, in the algorithm, a ball is constructed with a pre-defined radius input and is "rolled" across the point cloud, creating triangular meshes, which results in a web of 3D interconnected triangular meshes.  There are three key parameters to tweak which result the quality of output: the <i>radius</i> of the ball, the maximum allowable <i>angle threshhold</i> between edges, and the smallest allowable <i>clustering radius</i> between points.
 						</p>
+						<p>
+						Citing from (Bernardini 1999), we see that the algorithm features many O(1) calls; where loops occur, the ball pivots operate upon an O(n) number of pivots. Any algebra performed results in more O(1) calls.  To find and test points against a triangle, we encounter a worst-case runtime of O(B^3) steps, which the paper argues reduces to O(1) due to B being a constant size of candidate points.  Overall, Bernardini argues that an optimized implemenation uses "O(n+L) memory, where L is the number of cells in the voxel grid," and n is the "data, the...advancing front..., and the candidate edge queue.  The table below demonstrates information about runtime, memory usage, and I/O time relative to a <i>450MHz Pentium II Xeon</i>; thus, we would expect considerably faster performance on a modern quad-core Intel CPU - likely many magnitudes higher.
+						</p>
+						<h4>*Sample of the table from Bernardini 1999</h4>
+						<img src="images/BPAruntime.png" alt="Image of Bernardini 1999 Table" height="auto" width="700px">
+
 					</section>
 
 					<!-- Image -->
