@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>CS184 Final Project - Point Cloud / Mesh</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+
+					<!-- Logo -->
+						<a href="index.html" class="logo">
+							<span class="symbol"><!-- <img src="images/logo.svg" alt="" /></span> -->
+							<span class="title">CS184 Final Project</span>
+							<br /><span style="letter-spacing: -0.015em; font-weight: 500;">Bryan Tong, Jessica Lee, Rohit Golconda</span>
+
+						</a>
+				</div>
+			</header>
+		<!-- Main -->
+			<div id="main">
+				<div class="inner">
+					<h1 style="letter-spacing: 0;">Point Cloud / Mesh Converter</h1>
+
+					<!-- Text -->
+					<section>
+						<h2>Abstract</h2>
+						<p>In this project, we wanted to find a way to convert a given 3D point cloud into a mesh representation.  We intend to explore different methods of interpolation to create different meshes, determine the best output for our criteria, and pursue building that out fully.
+						</p>
+						<p>
+						This is an important problem to tackle, because given simply a raw dataset of points, it is difficult to grasp what the points actually represent. By converting the point cloud into a mesh, we can visualize the 3D scan with much more clarity, especially if the point cloud is sparse or when zooming in on the point cloud. Additionally, even with a dense point cloud, it could be hard to tell where the surface is. 3D scanning is used in autonomous driving, mapping landscapes/terrain, architecture, and much more. 
+						</p>
+						<p>
+						This is currently written up for our midway checkpoint.  We are slightly behind schedule, though believe we can finish our desired features in time. Below is what our research and analyses have yielded so far.  We forsee to have optimization struggles in the future.
+						</p> 
+					</section>
+
+					<section>
+					<h2>Background Research</h2>
+					<p>Before we dove into this project, we entertained some methods of implementation: tri-mesh, quad-mesh, Poisson reconstruction, constrained Poisson-disk sampling, Marching Cube algorithm, Ball-Pivoting algorithm.  We briefly researched into many more related topics such as registration, resampling, color/normal/scalar fields handling, statistics computation, sensor management, interactive or automatic segmentation, display enhancement.
+					</p>
+					<p>
+					After receiving feedback on our proposal, we quickly scrapped the idea of using Poisson-related algorithms.  We narrowed down our first algorithm to explore in-depth to be the Ball-Pivoting algorithm, as it seemed to be well-documented and cleanly applicable.
+					</p>
+					<p>
+					We conducted much of our premilinary research via reading published, highly-cited papers.  Attached via this URL (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4929111/) is one such paper, of which we will summarize the results proving performance analysis comparisons between different surface reconstruction algorithms we were considering prior to implementation.
+					</p>
+
+					<!-- Image -->
+						<section>
+							<h2>Image</h2>
+							<div class="box alt">
+								<div class="row gtr-uniform">
+									<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
+									<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
+									<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+									<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+									<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
+									<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
+									<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
+									<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+									<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
+								</div>
+							</div>
+							<h3>Left &amp; Right</h3>
+							<p><span class="image left"><img src="images/pic14.jpg" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
+							<p><span class="image right"><img src="images/pic15.jpg" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
+						</section>
+
+				</div>
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<section>
+						<h2>Midpoint Project - WIP</h2>
+					</section>
+					
+					<ul class="copyright">
+						<li>&copy; 2019</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
