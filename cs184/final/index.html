@@ -32,11 +32,17 @@
 		<!-- Main -->
 			<div id="main">
 				<div class="inner">
-					<h1 style="letter-spacing: 0;">Point Cloud / Mesh Converter</h1>
+					<h1 style="letter-spacing: 0;">Point Cloud → Mesh Converter</h1><img style="width:400px;height:auto;position: absolute;top:50px;right:150px;" src="images/bc.png"></img>
 
 					<!-- Text -->
 					<section>
 						<h2>Abstract</h2>
+						<p>Given a point cloud, how can we convert it into a mesh to create a model of the scanned object? With just a cloud of points it can be hard to tell what the points represent. By converting the point cloud into a mesh, we can visualize a 3D scan with much more clarity, especially if the point cloud is sparse or when zooming in on the point cloud. Additionally, even with a dense point cloud, it could be hard to tell where the surface is. 3D scanning is used in autonomous driving, mapping landscapes/terrain, architecture, and much more. For our final project we implemented surface reconstruction from a set of 3D points using the Ball-Pivoting Algorithm.
+						</p>
+						<p>
+						Our group decided to work on Mesh reconstruction since we had heard about point-cloud reconstruction in AR & VR and wanted to try it ourselves. We did research on several different algoritms to use and ultimately decided to use the Ball-Pivoting algorithm. The algorithm is very efficient and gives us good results, although it requires that we provide a cleanly-spaced set of inputs. Unfortunately, it is not openly available for use since it is patented by IBM. We found that implementing the algorithm ourselves was very difficult, and required a large amount of debugging to fix the issues that arose from our implementations. We also needed to convert the input point cloud files we found to a format that would be easy to render from; we eventually settled on using <code>.ply</code> files for this purpose.
+						</p>
+<!-- 
 						<p>In this project, we wanted to find a way to convert a given 3D point cloud into a mesh representation.  We intend to explore different methods of interpolation to create different meshes, determine the best output for our criteria, and pursue building that out fully.
 						</p>
 						<p>
@@ -46,18 +52,11 @@
 						This is currently written up for our midway checkpoint.  We are slightly behind schedule, though believe we can finish our desired features in time. Below is what our research and analyses have yielded so far.  We forsee to have optimization struggles in the future.
 						</p>
 						<p>
-						We have completed Week 1 and 2 on our planning document and are pursuing the Ball-Pivoting algorithm to proceed forward with the point-cloud mesh reconstruction.  We are currently implementing the capability to parse a point-cloud via a <code>.ply</code> file.  Afterwards, we will move on to being able to visually demonstrate capabilities of this algorithm and our mesh reconstructor.
+						We have completed Week 1 and 2 on our planning document and are pursuing the Ball-Pivoting algorithm to proceed forward with the point-cloud mesh reconstruction.  We are currently implementing the capability to parse a point-cloud via a <code>.ply</code> file.  Afterwards, we will move on to being able to visually demonstrate capabilities of this algorithm and our mesh reconstructor. -->
 						</p>  
 					</section>
 
-					<section>
-						<h2>Milestone Video &amp; Slides</h2>
-						<ul>
-							<li><a href="https://drive.google.com/file/d/1Xq09ZgZFtnMPY4KnVHt7Jy8bAd3EWUS3/view?usp=sharing">Link to Milestone Video</a></li>
-							<li><a href="https://docs.google.com/presentation/d/1oA5_Kdm1_Mr7cRVq4OKkyACLvG2flo8xYewyJjfquFg/edit?usp=sharing">Link to Milestone Slides</a></li>
-						</ul>
-						</p>  
-					</section>
+
 
 					<section>
 						<h2>Background Research</h2>
@@ -65,17 +64,11 @@
 						</p>
 						<p>After receiving feedback on our proposal, we quickly scrapped the idea of using Poisson-related algorithms.  We narrowed down our first algorithm to explore in-depth to be the Ball-Pivoting algorithm, as it seemed to be well-documented and cleanly applicable.
 						</p>
-						<p>We conducted much of our premilinary research via reading published, highly-cited papers. The following bullet points list the papers we reference in this section:
-						<ul>
-							<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4929111/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4929111/</a></li>
-							<li><a href="https://www.cs.jhu.edu/~misha/Fall13b/Notes/Bernardini99.notes.pdf">https://www.cs.jhu.edu/~misha/Fall13b/Notes/Bernardini99.notes.pdf</a></li>
-							<li><a href="https://lidarwidgets.com/samples/bpa_tvcg.pdf">https://lidarwidgets.com/samples/bpa_tvcg.pdf</a></li>
-							<li><a href="https://vgc.poly.edu/~csilva/papers/tvcg99.pdf">https://vgc.poly.edu/~csilva/papers/tvcg99.pdf</a></li>
-						</ul>
+						<p>We conducted much of our premilinary research via reading published, highly-cited papers, which will be listed at the bottom of this page. 
 						From these, we will summarize the results proving performance analysis comparisons between different surface reconstruction algorithms we were considering prior to implementation.
 						</p>
 						<p>
-						In the paper, tangent-plane estimation, PCA, Tight Cocone, and Power Crust algorithms / methods are all quickly dismissed for having too many issues handling noisy and/or low-density point clouds, or they simply have poor runtimes.  Ball-Pivoting algorithm and Poisson surface reconstruction performed better, albeit Ball-Pivoting required parallelization optimizations to perform better.  Following the TA's recommendation to not pursue Poisson, we are left with Ball-Pivoting algorithm (hereinafter defined as BPA) to consider.
+						In the comparison paper, tangent-plane estimation, PCA, Tight Cocone, and Power Crust algorithms / methods are all quickly dismissed for having too many issues handling noisy and/or low-density point clouds, or they simply have poor runtimes.  Ball-Pivoting algorithm and Poisson surface reconstruction performed better, albeit Ball-Pivoting required parallelization optimizations to perform better.  Following a TA's recommendation to not pursue Poisson, we are left with Ball-Pivoting algorithm (hereinafter defined as BPA) to consider.
 						</p>
 						<p>
 						The <strong>Ball-Pivoting Algorithm (BPA)</strong> is considered to be an efficient surface reconstruction method (with optimization applied).  At a high level, in the algorithm, a ball is constructed with a pre-defined radius input and is "rolled" across the point cloud, creating triangular meshes, which results in a web of 3D interconnected triangular meshes.  There are three key parameters to tweak which result the quality of output: the <i>radius</i> of the ball, the maximum allowable <i>angle threshhold</i> between edges, and the smallest allowable <i>clustering radius</i> between points.
@@ -83,30 +76,101 @@
 						<p>
 						Citing from (Bernardini 1999), we see that the algorithm features many O(1) calls; where loops occur, the ball pivots operate upon an O(n) number of pivots. Any algebra performed results in more O(1) calls.  To find and test points against a triangle, we encounter a worst-case runtime of O(B^3) steps, which the paper argues reduces to O(1) due to B being a constant size of candidate points.  Overall, Bernardini argues that an optimized implemenation uses "O(n+L) memory, where L is the number of cells in the voxel grid," and n is the "data, the...advancing front..., and the candidate edge queue.  The table below demonstrates information about runtime, memory usage, and I/O time relative to a <i>450MHz Pentium II Xeon</i>; thus, we would expect considerably faster performance on a modern quad-core Intel CPU - likely many magnitudes higher.
 						</p>
-						<h4>*Sample of the table from Bernardini 1999</h4>
 						<img src="images/BPAruntime.png" alt="Image of Bernardini 1999 Table" height="auto" width="700px">
-
+						<span style="writing-mode: vertical-rl;text-orientation: mixed;font-size: 0.6em;">*Sample of the table from Bernardini 1999</span>
+						<p></p>
 					</section>
+
+					<section>
+						<h2>General Approach</h2>
+						<p><span class="image right"><img src="images/gen.png"  alt="General Approach Diagram of BPA" /></span>
+						We start with a point cloud, <code>p</code>, that represents the surface of the object we are trying to create a mesh representation for. We first create an original "seed" triangle by choosing 3 points that are close enough to be in contact with a ball of radius <code>r</code>, with a valoue of our choice. We then rotate this ball around two of these points until we find a third point; this third point forms an edge which we use to expand off of the seed triangle.</p>
+						<p>
+						This process continues until there are no more points that we can expand off of from the currently stored triangles; after this, we find a new seed triangle and continue the process. We continue our process until there are no more available seed triangles, whereupon we stop and should have a finished mesh.
+						</p>
+					</section>
+
+					<section>
+						<h2>Technical Approach</h2>
+						<p><span class="image right"><img src="images/algor.png" style="height:400px;width:auto;" alt="Technical Diagram of BPA" /></span>
+						From the IPOL Journal Archive, we were able to have access to a library of <code>.txt</code> files that contained the 3D points and their normals in <code>x</code> <code>y</code> <code>z</code> <code>nz</code> <code>ny</code> <code>nz</code> format, with optional trailing <code>r</code> <code>g</code> <code>b</code> values. Our first step was to render the point cloud using OpenGL, referencing the renderer implemented from Project 2: MeshEdit.
+						</p>
+						<p>
+						This paper used an octree to make BPA more efficient, but we used a 3D array for storing the spacial data as a grid of voxels. This is so we can have quick access of the neighboring points when we “roll” the ball. We set the side lengths of the voxels to be the diameter of the ball, which we obtained by averaging the distances between points. While this structure was efficient and intuitive a large amount of memory necessary to store the entire point cloud within the voxels.
+						</p>
+						<img src="images/alg6.png" alt="Cases" height="auto" width="390px">
+						<img src="images/alg5.png" alt="Cases" height="auto" width="390px">
+
+						<p>To find the seed triangle, we used the naive method of just searching (iterating) through the points until 3 vertices that neighbor each other are found. Then for expanding the triangulation, we first need to find a candidate vertex (Algorithm 6) that we can pivot the ball towards. There are four different cases for rotating the ball around an edge (see diagram). This process is outlined above (Algorithm 5). 
+						</p>
+						<img src="images/cases.png" alt="Cases" height="auto" width="600px">
+						<p>
+						We expand triangulation until a candidate can no longer be found, in which case we repeat the step of finding a seed triangle and so on until there are no more that can be found/satisfy the conditions. Afterwards, we repeat the entire process with different radii balls. 
+						</p>
+					</section>
+
+					<section>
+						<h2>Problems Encountered & Lessons Learned</h2>
+						<p><span class="image right"><img src="images/failedcube.png"  alt="Failed Cube" /></span>
+						We originally ran into issues with a large number of vertices being left out of the final mesh. To resolve this, we tried running the algorithm multiple times, with different radii sizes. This allowed us to fill in triangles that were being left empty otherwise. We also found that it was incredibly difficult to render the output meshes very quickly, and needed to increase the runtime of our algorithm to make it render at a reasonable pace. In addition, there were issues with the edge cases of the algorithm - our code would not always connect every triangle from the outside and surrounding cases (ones that are on the edge of the mesh and ones formed by 3 other triangles that use the three edges of the excluded triangle). Unfortunately, this issue was not fully resolved. We did also have problems when trying to render our output files; we originally tried to use the built-in renderer, but found that there were issues with halfedge construction. To fix this, we had to effectively build our own bootleg renderer.
+						</p>
+						<p>To the right is a photo of our first failed cube mesh, rendered on a NVIDIA M5000 Quadro after many hours.</p>
+						<p>
+						We learned a lot about File IO because of the conversion processes we used to help in rendering. In understanding how to render our output, we also learned a lot about CGL. We also underestimated how tricky the Ball-Pivoting algorithm was, and found that it still isn’t a perfected algorithm. It would’ve been better if we had worked on implementing it a lot earlier rather than assuming it would not have any bugs.
+						</p>
+					</section>
+
 
 					<!-- Image -->
 					<section>
-						<h2>WIP FOR FINAL</h2>
+						<h2>Results</h2>
 						<div class="box alt">
 							<div class="row gtr-uniform">
-								<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-								<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-								<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-								<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-								<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-								<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-								<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-								<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-								<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
+								<div class="col-4"><span class="image fit"><video class="image fit" controls><source src="images/screenrec.mp4" type="video/mp4"></video>Cube, Code to Point Cloud</span></div>
+								<div class="col-4"><span class="image fit"><video class="image fit" controls><source src="images/brokenbpacube.mp4" type="video/mp4"></video>Broken BPA Cube Mesh Example </span></div>
+								<div class="col-4"><span class="image fit"><video class="image fit" controls><source src="images/brokenbpabody.mp4" type="video/mp4"></video>Colored Point Clouds</span></div>
+								<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" />Mesh</span></div>
+								<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" />Mesh</span></div>
+								<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" />Mesh</span></div>
+								<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" />Video</span></div>
+								<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" />Video</span></div>
+								<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" />Video</span></div>
 							</div>
 						</div>
-						<h3>Left &amp; Right</h3>
-						<p><span class="image left"><img src="images/pic14.jpg" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-						<p><span class="image right"><img src="images/pic15.jpg" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
+					</section>
+
+					<section>
+						<h2>Milestone Video &amp; Slides &amp; Final Presentation</h2>
+						<ul>
+							<li><a href="https://drive.google.com/file/d/1Xq09ZgZFtnMPY4KnVHt7Jy8bAd3EWUS3/view?usp=sharing">Link to Milestone Video</a></li>
+							<li><a href="https://docs.google.com/presentation/d/1oA5_Kdm1_Mr7cRVq4OKkyACLvG2flo8xYewyJjfquFg/edit?usp=sharing">Link to Milestone Slides</a></li>
+							<li><a href="https://docs.google.com/presentation/d/1qmRUKl1j9iDl2Ff1fcEKJmxEhHN7FysuQKNXNPBJCOY/edit?usp=sharing">Link to Final Presentation Slides</a></li>
+
+						</ul>
+						</p>  
+					</section>
+
+					<section>
+						<h2>Contributions</h2>
+						<ul>
+							<li>Rohit created the code to parse input files, worked on the ball-pivoting algorithm, and worked on the final report. </li>
+							<li>Jessica worked on the ball-pivoting algorithm and created the code to render point clouds, as well as working on the final report.</li>
+							<li>Bryan worked on the adaptation of MeshEdit and the loading and rendering of point clouds. He also created the videos and did the bulk of the work on the milestone site.</li>
+
+
+						</ul>
+						</p>  
+					</section>
+
+					<section>
+						<h2>Works Cited / Referenced</h2>
+						<ul>
+							<li><a href="http://w3.impa.br/~diego/software/rply/?fbclid=IwAR2BELO0dKHpQgVMc4nkuo3s6seTi_3YQ8L2KtkGJ7mrr8fjcckFOJRpoOo">Parsing Software</a></li>
+							<li><a href="http://www.ipol.im/pub/art/2014/81/?fbclid=IwAR1Mn82-vI3sM__f-Dh_cNAx_0yTP91xtKXYcDMqDasbCZTQ4FqvHvNp67E">BPA Research Publication</a></li>
+							<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4929111/?fbclid=IwAR0kZ-L91HgJMxO9EJHvU8g9hltl133AdzKsQIZaGxt0HuNyRg3jvoWGMvM">BPA Analysis Paper</a></li>
+							<li><a href="http://graphics.stanford.edu/data/3Dscanrep/?fbclid=IwAR2tfqmi9PBIPMSJM1pJDDEXooSvG8OnOxcbRQ25yWjQXB1W9QZzcjuWtaQ">Point-Cloud Files</a></li>
+						</ul>
+						</p>  
 					</section>
 
 				</div>
