@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>  
+    div.padded {  
+      padding-top: 0px;  
+      padding-right: 50px;  
+      padding-bottom: 0.25in;  
+      padding-left: 50px;  
+    }  
+  </style> 
+  <style>
+  body {
+    padding: 50px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 200;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 PathTracer - Bryan Tong</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+<body>
+<br />
+<h1 align="middle">Assignment 3: PathTracer</h1>
+    <h2 align="middle">Bryan Tong</h2>
+
+    <!-- INTRODUCTION -->
+    <div class="padded">
+      <p>In this project, I implemented the basics of a physically-based path-tracing renderer. 
+        We used ray-scene intersection, bounding volume hierarchies, physically-based lighting principles, various sampling methods, and even implemented adaptive sampling. 
+        Overall, this project was an amazing learning experience -- I was able to visually see and practically learn from non-theorhetical code how these abstract topics and algorithms 
+        discussed in lecture translate to direct visual results.  I am looking forward to completing all of the features in Project 3-2; however, let's now dive into the 
+        details of this project!
+    </p>
+
+    <!-- PART 1 -->
+    <h2 align="middle">Part 1: Ray Generation and Intersection</h2>
+    <p>To kick off this project, I began with a very basic function that essentially calculates
+        an average irradiance of one pixel.  I used a <code>ns_aa</code> variable and a <code>gridSampler</code> 
+        to find random samples totaling up to <code>ns_aa</code> number of samples. Then, I generate the ray and evaluate its radiance.
+        <br />
+        <br />
+        The chunk of my time spent debugging Part 1 actually led me back to this first function.  Initially, I 
+        rather carelessly wrote code, focusing on understanding the concepts, and ignored C++ semantics of type casting. 
+        That came back to bite me, because two key bugs resulting in broken rendering originated from casting issues.
+      <br />
+      <br />
+      To actually generate camera rays, I followed CS184's slides on world-space depiction and converting <code>hFov</code> and 
+      <code>vFov</code>, and applying a transform + normalize to obtain a vector representing the direction of our ray.
+      <br />
+      <br />
+      The next tricky step was figuring out how to create Triangle and Sphere intersections. 
+      I used the Moller Trumbore algorithm's derivation to implement an equivalent in code; I 
+      used this to solve for intersections of a ray into a triangle to obtain a 
+      <code>t-value</code> within a valid range.  I then used this <code>t-value</code> 
+      to populate an Intersection data-type.  The PathTracer worked, kinda, by this point!
+      All that was left to do was to implement Sphere type intersections; to tackle this,
+      I used the quadratic forumla and barycentric coordinate conversions.  This procedure was 
+      fairly straightforward, except for realizing that there are possibly two <code>t-values</code> 
+      that arise with intersection with a sphere.  The solution to this issue was to consider only the 
+      closer <code>t1</code> value, which intuitively makes sense to find the initial surface of a sphere.
+      <br />
+      <br />
+      Below are some examples of normal shading for the few <code>.dae</code> files that render quickly.
+      The gems, when I took the photo in Part 1, encountered a bug (I think), as they now render properly 
+      after finishing the rest of the parts.
+    </p>
+    <div align="center">
+      <table style="width=100%">
+        <tr>
+            <td align="middle">
+            <img src="images/p1-front-sphere.png" width="450px" />
+            <figcaption align="middle">Straight-on view of spheres</figcaption>
+
+            <td align="middle">
+            <img src="images/p1-front-gems.png" width="450px" />
+            <figcaption align="middle">Straight-on view of gems, with bug</figcaption>
+        </tr>
+        <tr>
+          <td align="middle">
+          <img src="images/p1-angle-empty.png" width="450px" />
+          <figcaption align="middle">Angled view of an empty room</figcaption>
+
+          <td align="middle">
+          <img src="images/p1-angle-gems.png" width="450px" />
+          <figcaption align="middle">Angled view of gems, with bug</figcaption>
+        </tr>
+      </table>
+    </div>
+
+    <!-- PART 2 -->
+    <h2 align="middle">Part 2: Bounding Volume Hierarchy</h2>
+    <p>
+        To speed up rendering of large <code>.dae</code> files, I implemented a Bounding Volume Hierarchy (BVH) system 
+        to speed up the PathTracer.  The BVH system can be broken down into some main components: the construction 
+        of a BVH, the use of bounding boxes, and testing for ray-BVH intersections.
+        <br />
+        <br />
+        To construct a BVH, I computed a bounding box via primitives and stored it in a <code>BVHNode</code> data structure. 
+        I performed basic tree traversal, handling cases of leaf nodes and the recursive construction of the BVH via subdivisions.
+        In order to pick an ideal axis, I created a helper function called <code>BVHAccel::findLargestDimension</code> to find the largest dimension 
+        of an <code>extent</code> to obtain an axis from.  As the function progressed, I made sure to update the midpoint of the bounding box
+        by checking if the lesser or greater halves ever became empty.  If they did, I simply shifted the midpoint to be either one-half or twice the original 
+        split, respectively.
+        <br />
+        <br />
+
+        Checking for BVH intersections was fairly straightforward.  I basically checked if either the left or right child of the node encountered a "hit," or intersection 
+        and returned a boolean indicating that.  The overloaded BVH algorithm needed a little more tricky handling for the leaf BVH of a node, but it conceptually 
+        was straightforward - perform basic intersection tests, perform subcases for leaf nodes, and recursively call it for the left and right children if it is not.
+        <br />
+        <br />
+        The more fun part follows.  I tried to optimize my BVH as much as possible my ensuring variables weren't repeatedly declared in-memory in for loops. 
+        Furthermore, I shifted around equality checks and tried to short-circuit returns as much as possible to speed up rendering. The results show 
+        that the optimizations work pretty well, check it out for yourself:
+        <br />
+
+      <br />
+        Before implementing BVH:
+        <br />
+        <code>
+          [PathTracer] Rendering... 100%! (156.9915s)
+          <br />
+          [PathTracer] BVH traced 1905379 rays.
+        </code> 
+        <br />
+        After implementing BVH:
+        <br />
+        <code>
+            [PathTracer] Rendering... 100%! (0.8008s)
+            <br />
+            [PathTracer] BVH traced 1515922 rays.
+            <br />
+            [PathTracer] Averaged 3.923261 intersection tests per ray.
+        </code>
+        <br />
+        <br />
+        That's a reduction of 156.1907 seconds for the cow render! Although the angle is slightly different so less rays were traced, 
+        we're looking at a 150x - 200x speedup.
+        Here's some really neat examples of normal shading, including a few <code>.dae</code> files that formerly would not realistically render.
+    </p>
+    <div align="center">
+        <table style="width=100%">
+          <tr>
+              <td align="middle">
+              <img src="images/p2-bvh.png" width="450px" />
+              <figcaption align="middle">BVH of CBLucy.dae</figcaption>
+  
+              <td align="middle">
+              <img src="images/p2-lucy.png" width="450px" />
+              <figcaption align="middle">Rendering of CBLucy.dae</figcaption>
+          </tr>
+          <tr>
+            <td align="middle">
+            <img src="images/p2-giphy.gif" width="450px" />
+            <figcaption align="middle">GIF of cow rendering. Moo.</figcaption>
+  
+            <td align="middle">
+            <img src="images/p2-max.png" width="450px" />
+            <figcaption align="middle">Rendering of Max Planck</figcaption>
+          </tr>
+        </table>
+      </div>
+
+    <!-- PART 3 -->
+    <h2 align="middle">Part 3: Direct Illumination</h2>
+    <p>
+      To kick off implementing direct lighting, we first had to fill in the two <code>DiffuseBSDF</code> functions for formalities sake.  Although the
+       <code>f</code> function is a constant, <code>sample_f</code> uses the built in sampler for <code>wi</code>.  With 
+      that completed, we can move on to the bulk of implementing direct illumination.
+      <br />
+      <br />
+      For direct hemisphere lighting, I wrote a function that takes uniform samples surrounding <code>hit_p</code> and computed the 
+      incoming radiance from every ray intersecting a light source.  This was pretty straightforwarded, following the steps to gather 
+      the samples, cast a ray from our <code>hit_p</code> out, testing our BVH, and performing the math as shown in the slides.
+      <br />
+      <br />
+      For direct lighting with importance sampling, we sum over every light source in the scene and 
+      take samples from the incoming radiance from every light's surface.  This solves the noise issue from the previous part, although 
+      it is more computationally intensive.  To implement this, I instead looped over every <code>SceneLight</code> and followed the 
+      steps somewhat straightforwardly. To my surprise, I was able to re-use most of the computations from the previous part. However, 
+      I had to handle the sampling cases and <code>disToLight</code> concepts here.
+      <br />
+      <br />
+      In the examples below, I compare my results between hemisphere and importance sampling methods.  To summarize the difference, 
+      I found that hemisphere sampling was computationally faster by a non-trivial amount.  However, we can see very strong differences 
+      to the naked eye between uniform hemisphere sampling and lighting sampling.  Sorry for the accidental crop with the dragons, but 
+      we can still see clearly how show shadows with very few light samples introduces quite a lot of noise.  To reduce this noise, we 
+      increase the amount of light rays, while locking it at 1 sample per pixel to observe the effects.  We can see a somewhat linear correlation 
+      to reduction of noise as more light rays are introduced.  Clearly, importance lighting sampling is still preferred, as we will realistically take 
+      more than 1 sample per pixel and have >64 light rays, which will produce a beautiful result.
+      </p>
+      <div align="center">
+        <table style="width=100%">
+          <tr>
+              <td align="middle">
+              <img src="images/p3-cbunny-low.png" width="450px" />
+              <figcaption align="middle">Low-rez hemisphere-sampled bunny</figcaption>
+
+              <td align="middle">
+              <img src="images/p3-cbunny-high.png" width="450px" />
+              <figcaption align="middle">High-rez hemisphere-sampled bunny</figcaption>
+          </tr>
+          <tr>
+            <td align="middle">
+            <img src="images/p3-bunny-importance.png" width="450px" />
+            <figcaption align="middle">Basic importance sampled bunny</figcaption>
+
+            <td align="middle">
+            <img src="images/p3-dragon-importance.png" width="450px" />
+            <figcaption align="middle">Basic importance sampled dragon</figcaption>
+          </tr>
+          <tr>
+            
+            <td align="middle">
+            <img src="images/p3-l1.png" width="450px" />
+            <figcaption align="middle">Dragon rendered with 1 light ray <br />(279,002 rays traced, 0.1006s)</figcaption>
+
+            <td align="middle">
+            <img src="images/p3-l4.png" width="450px" />
+            <figcaption align="middle">Dragon rendered with 4 light rays <br />(469,232 rays traced, 0.2259s)</figcaption>
+          </tr>
+          <tr>
+            <td align="middle">
+            <img src="images/p3-l16.png" width="450px" />
+            <figcaption align="middle">Dragon rendered with 16 light rays <br />(1,167,802 rays traced, 0.6013s)</figcaption>
+
+            <td align="middle">
+            <img src="images/p3-l64.png" width="450px" />
+            <figcaption align="middle">Dragon rendered with 64 light rays <br />(3,983,177 rays traced, 1.9312s)</figcaption>
+            </tr>
+        </table>
+      </div>
+
+    <!-- PART 4 -->
+    <h2 align="middle">Part 4: Indirect Lighting</h2>
+    <p>For the next part of the project, we want to be able to render images with full global illumination.  This requires probabilistic light bouncing 
+      calculations, which we will refer to as indirect lighting. To accomplish this, we will focus heavily on a function called,<code>est_radiance_global_illumination</code>, gives us an estimate of the total radiance using global illumination, from a specific direction, which 
+      is broken down into some more subparts, as follows:
+      <ul>
+        <li><code>zero_bounce_radiance</code> simply returns light resulting from zero bounces, e.g., the point must actively be on a light.</li>
+        <li><code>one_bounce_radiance</code> just returns direct illumination as in part 3.</li>
+        <li><code>at_least_one_bounce_radiance</code> is the substance of this indirect lighting section, which we will now dive into.</li>
+      </ul>
+      Implementing at_least_one essentially required me to: take a sample from the surface BSDF, use Russian roulette random sampling with <code>p = 0.6</code> 
+      to determine if I wanted to terminate the ray.  Then, I ensured that indirect illumination and sufficient depth for recursion was enabled so that I 
+      always traced at least once bounce.  Then, I performed standard offset calculations and recursively traced the ray, converted incoming radiance into 
+      an estimation, and then returned that.  Lastly, I fixed the global_illumnation function to selectively toggle which function to call.  All of my bug-checking 
+      came from forgetting to do this step... so let's go look at some pretty pictures again now.
+      <br />
+      <br />
+      In the photos below, I've compared direct illumination and indirect illumination @ 1024 samples per pixel, with 
+      <code>max_ray_depth</code> equal to 0, 1, 2, 3, and 100.  Then, I compared various sample-per-pixel rates, using 1, 2, 4, 8, 16, 64, and 1024, with 
+      a static 4 light rays.  The wall of photos is as follows:
+      </p>
+      
+      <div align="center">
+        <table style="width=100%">
+            <tr>
+                <td align="middle">
+                <img src="images/p4-dragon.png" width="450px" />
+                <figcaption align="middle">A cool dragon showing off global illumination.</figcaption>
+                <td align="middle">
+                <img src="images/p4-spheres.png" width="450px" />
+                <figcaption align="middle">Spheres also rendered with global illumination.</figcaption>
+                <td align="middle">
+            </tr>
+          <tr>
+              <td align="middle">
+              <img src="images/p4-bunny-direct.png" width="450px" />
+              <figcaption align="middle">A bunny rendered with purely direct lighting.</figcaption>
+              <td align="middle">
+              <img src="images/p4-bunny-indirect.png" width="450px" />
+              <figcaption align="middle">A bunny rendered with purely indirect lighting.</figcaption>
+              <td align="middle">
+          </tr>
+          <tr>
+              <td align="middle">
+              <img src="images/maxgif.gif" width="450px" />
+              <figcaption align="middle">GIF summarizing the max_ray_depth differences.</figcaption>
+              <td align="middle">
+              <img src="images/sgif.gif" width="450px" />
+              <figcaption align="middle">GIF summarizing the sample_per_pixel rates.</figcaption>
+          </tr>
+          <tr>
+            <td align="middle">
+            <img src="images/p4-bunny-max0.png" width="300px" />
+            <figcaption align="middle">max_ray_depth = 0</figcaption>
+            </td>
+
+            <td align="middle">
+            <img src="images/p4-s1.png" width="300px" />
+            <figcaption align="middle">samples_per_pixel = 1</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td align="middle">
+            <img src="images/p4-bunny-max1.png" width="300px" />
+            <figcaption align="middle">max_ray_depth = 1</figcaption>
+            </td>
+
+            <td align="middle">
+            <img src="images/p4-s2.png" width="300px" />
+            <figcaption align="middle">samples_per_pixel = 2</figcaption>
+            </td>
+          </tr>          
+          <tr>
+            <td align="middle">
+            <img src="images/p4-bunny-max2.png" width="300px" />
+            <figcaption align="middle">max_ray_depth = 2</figcaption>
+            </td>
+
+            <td align="middle">
+            <img src="images/p4-s8.png" width="300px" />
+            <figcaption align="middle">samples_per_pixel = 8</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td align="middle">
+            <img src="images/p4-bunny-max3.png" width="300px" />
+            <figcaption align="middle">max_ray_depth = 3</figcaption>
+            </td>
+
+            <td align="middle">
+            <img src="images/p4-s16.png" width="300px" />
+            <figcaption align="middle">samples_per_pixel = 16</figcaption>
+            </td>
+          </tr>
+          <tr>
+            <td align="middle">
+            <img src="images/p4-bunny-max100.png" width="300px" />
+            <figcaption align="middle">max_ray_depth = 100</figcaption>
+            </td>
+
+            <td align="middle">
+            <img src="images/p4-s64.png" width="300px" />
+            <figcaption align="middle">samples_per_pixel = 64</figcaption>
+            </td>
+          </tr>
+
+          <tr>
+              <td align="middle">
+              <img src="images/p4-white.png" width="300px" />
+              <figcaption align="middle"></figcaption>
+              </td>
+  
+              <td align="middle">
+              <img src="images/p4-s1024.png" width="300px" />
+              <figcaption align="middle">samples_per_pixel = 1024</figcaption>
+              </td>
+            </tr>
+        </table>
+      </div>
+
+    <!-- PART 5 -->
+    <h2 align="middle">Part 5: Adaptive Sampling</h2>
+    <p>
+      In the last part of the project, I implemented adaptive sampling.  To do this, 
+      I followed the spec's very simple algorithm that pixel-by-pixel detects if the 
+      pixel has converged during ray tracing.  We use a simple algorithm and check 
+      to represent the 95% confidence interval from statistics and add it to our 
+      modified part 1 for loop that now traces and detects convergence. I tweaked a few 
+      variables involving <code>sampleBuffer</code> and added the statistical computations, 
+      changed my offset code, and properly updated the average variables I had from part 1.
+      The result is some beautiful rendering that takes way less time to produce an image 
+      with minimal noise, as shown below!
+      <br />
+      <br />
+      We can see that the blue sections are areas of no sampling rate, e.g., the sky light source 
+      and the blank xyz space surrounding it.  The areas of green indicate a mid-range of the 
+      sampling rate, and the interesting areas of red indicate a higher sampling rate.  These 
+      areas of high sampling rate feature heavy definitions of shadows resulting from both 
+      direct and indirect lighting, i.e., global illumination.  Thus, we see that rendering 
+      global illumination around heavily shadowed areas such as the bunny is very resource 
+      intensive and results in a high sample rate. 
+    </p>
+      <div align="center">
+        <table style="width=100%">
+          <tr>
+              <td align="middle">
+              <img src="images/p5.png" width="450px" />
+              <figcaption align="middle">Bunny with adaptive sampling</figcaption>
+
+              <td align="middle">
+              <img src="images/p5_rate.png" width="450px" />
+              <figcaption align="middle">Sampling rate output</figcaption>
+          </tr>
+        </table>
+      </div>
+
+    <!-- PART 6 -->
+    <h2 align="middle">Challenge Parts</h2>
+    <p>
+      I didn't dive into any challenge sections except ensuring that all of my functions had 
+      in-memory variables pulled out of loops.  This resulted in about a <code>2x</code> speedup 
+      in Part 2, after I ensured to not continuously initialize and toss away variables.
+      <br />
+      <br />
+      Thanks for reading!
+    </p>
+
+    <!-- <h2 align="middle">A Few Notes On Webpages</h2>
+        <p>Here are a few problems students have encountered in the past. You will probably encounter these problems at some point, so don't wait until right before the deadline to check that everything is working. Test your website on the instructional machines early!</p>
+        <ul>
+        <li>Your main report page should be called index.html.</li>
+        <li>Be sure to include and turn in all of the other files (such as images) that are linked in your report!</li>
+        <li>Use only <em>relative</em> paths to files, such as <pre>"./images/image.jpg"</pre>
+        Do <em>NOT</em> use absolute paths, such as <pre>"/Users/student/Desktop/image.jpg"</pre></li>
+        <li>Pay close attention to your filename extensions. Remember that on UNIX systems (such as the instructional machines), capitalization matters. <pre>.png != .jpeg != .jpg != .JPG</pre>
+        <li>Be sure to adjust the permissions on your files so that they are world readable. For more information on this please see this tutorial: <a href="http://www.grymoire.com/Unix/Permissions.html">http://www.grymoire.com/Unix/Permissions.html</a></li>
+        <li>And again, test your website on the instructional machines early!</li> -->
+</div>
+</body>
+</html>
+
+
+
+

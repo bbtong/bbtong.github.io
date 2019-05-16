@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Mesh Editor</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2019</h1>
+<h1 align="middle">Project 2: Mesh Editor</h1>
+<h2 align="middle">Bryan Tong, 26548098</h2>
+
+<br><br>
+
+<div>
+
+<h2 align="middle">Overview</h2>
+<p>In this project, we implemented mesh editor that can take primitive vertices and edges and perform operations such as splitting, flipping, and smoothening via Bezier curves and loop subdivision.  We found Bezier curves using de Casteljau's  algorithm and later combined it with loop subdivision for our final product.  This was really fun to see rough, blocky geometric "magically" turn into smooth, polished surfaces.</p>
+
+<h2 align="middle">Section I: Bezier Curves and Surfaces</h2>
+
+<h3 align="middle">Part 1: Bezier curves with 1D de Casteljau subdivision</h3>
+
+<p>
+To begin the project, we created Bezier curves via de Casteljau's algorithm, which is a recursive polynomial evaluating algorithm that is used in computer graphics to create smoothened curves out of polynomial control points.
+<br />
+<br />
+	We have a simple implementation that iterates through points stored in vectors in a evaluation-indexed vector called <code>evaluatedLevels</code>.  Essentially, we just split the points apart into separate <code>x, y</code> components and <code>lerp</code>'d the points to evaluate the next level.
+</p>
+
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/p1a.png" align="middle" width="300px"/>
+        <figcaption align="middle">6 control points</figcaption>
+      </td>
+      <td>
+        <img src="images/p1b.png" align="middle" width="300px"/>
+        <figcaption align="middle">1 evaluation</figcaption>
+      </td>
+      <td>
+        <img src="images/p1fml.png" align="middle" width="300px"/>
+        <figcaption align="middle">2 evaluations</figcaption>
+      </td>
+    </tr>
+    <br>
+    <tr>
+      <td>
+        <img src="images/p1c.png" align="middle" width="300px"/>
+        <figcaption align="middle">3 evaluations</figcaption>
+      </td>
+      <td>
+        <img src="images/p1d.png" align="middle" width="300px"/>
+        <figcaption align="middle">4 evaluations</figcaption>
+      </td>
+      <td>
+        <img src="images/p1e.png" align="middle" width="300px"/>
+        <figcaption align="middle">5 evaluations</figcaption>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img src="images/p1f.png" align="middle" width="300px"/>
+        <figcaption align="middle">6 evaluations</figcaption>
+      </td>
+      <td>
+        <img src="images/p1g.png" align="middle" width="300px"/>
+        <figcaption align="middle">The completed curve, in green</figcaption>
+      </td>
+      <td>
+        <img src="images/p1h.png" align="middle" width="300px"/>
+        <figcaption align="middle">Adjusted control points with cool curve</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<h3 align="middle">Part 2: Bezier surfaces with separable 1D de Casteljau subdivision</h3>
+<p>
+Similar to what we performed in part 1, we perform the 1D algorithm to eventually obtain points that comprise a larger 2D surface.  We can again put points that were processed by de Casteljau into de Casteljau's algorithm to create smoothened 2D surfaces.  This opens the possibility for smoothening faces of 3D models, thus creating bezier surfaces - another crucial tool in computer graphics.
+</p>
+	
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/teapot1.png" align="middle" width="500px"/>
+        <figcaption align="middle">w/o mesh</figcaption>
+      </td>
+      <td>
+        <img src="images/teapot2.png" align="middle" width="500px"/>
+        <figcaption align="middle">w/ mesh</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+
+<h2 align="middle">Section II: Sampling</h2>
+
+<h3 align="middle">Part 3: Average normals for half-edge meshes</h3>
+<p>
+To average normals, we essentially want to get a similar end-result to bezier surfaces, but instead via triangles as we no longer have grids to work with.  This results in the concept of a half-edge data structure to work with vertices and traverse the many triangles that create our surface.
+<br />
+<br />
+	We conveniently have functions that help us automatically normalize our data during the cross-product and output via <code>n.unit()</code>, so our main focus of this step was to correctly traverse the triangles and compute cross-products.  To do so, we realize that the vector coming out of our center vertex (if we imagine a circle broken up into triangles) is the <code>next</code> of a half-edge, and that half-edge's <code>twin</code> actually sends a vector towards our center / originating vertex.  Thus, we obtain the positions of all 3 vertices in our graph, and subtact the originating position in a respective direction to obtain a proper vector to perform a cross-product on.
+	<br /> 
+	<br />
+	The result then is a smoothened surface created by area-weighted half-edges.
+</p>
+	
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/opengldefault.png" align="middle" width="500px"/>
+        <figcaption align="middle">Default OpenGL w/o smoothening</figcaption>
+      </td>
+      <td>
+        <img src="images/openglsmooth.png" align="middle" width="500px"/>
+        <figcaption align="middle">Default OpenGL with area-averaged normals</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<h3 align="middle">Part 4: Half-edge flip</h3>
+<p>
+	To implement the half-edge flip operation, I followed a guide from CMU posted on Piazza, linked <a href="http://15462.courses.cs.cmu.edu/fall2015content/misc/HalfedgeEdgeOpImplementationGuide.pdf">here</a>.
+	The process was nice and straightforward - you gather up all of the half-edges, vertices, edges, and faces, and temporarily assign to variables that you use for re-assignment to flip edges.  I followed the guide for re-assignments and used the convenient <code>setNeighbors(...)</code> function provided in the skeleton.
+	<br />
+	<br />
+	The guide made implementaton a breeze (thank you TAs!), but I ran into one kind of careless bug that cost me a little chunk of time.  I re-checked every assignment I did twice before realizing that only considered half-edge's 7 and 9 continuing to outside vertices, when 6 and 8 also needed to call <code>->next()</code> and <code>->face()</code>, too.  Once I fixed that, the program stopped freezing.  The result is the neat looking screenshot below!
+</p>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/p4.png" align="middle" width="700px"/>
+        <figcaption align="middle">Some cool edge flips (I went overboard on edge flips)</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<h3 align="middle">Part 5: Half-edge split</h3>
+<p>
+	Similar to above, I followed the beautiful CMU guide to comprehend how to split half-edges.  The guide is linked <a href="http://15462.courses.cs.cmu.edu/fall2015content/misc/HalfedgeEdgeOpImplementationGuide.pdf">here</a>, once again.
+	<br /> <br />
+	To more easily implement edge-splitting, I followed the same logic as in the previous part and drew a diagram of how half-edges, edges, vertices, and faces will arise by performing the described split.
+	<br /> <br />
+	The diagram helped me heavily avoid debugging.  My only issue primarily was that I forgot to assign the midpoint an averaged value.  Once I found that, it was smooth sailing!
+</p>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/p5.png" align="middle" width="400px"/>
+        <figcaption align="middle">Repeat edge split examples</figcaption>
+      </td>
+      <td>
+        <img src="images/p5s.png" align="middle" width="400px"/>
+        <figcaption align="middle">Edge flips and splits on the car</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<h3 align="middle">Part 6: Loop subdivision for mesh upsampling</h3>
+<p>
+	I implemented loop subdivision by following the spec's "recipe," by first changing the topology of the mesh by splitting the triangles via 4-1 subdivision, updating vertex positions with a weighted average via <code>computeCentroid()</code>, and then re-assigning positions for vertices and edges based off of our splits and flips which occured in loop subdivision.
+	<br />
+	<br />
+	Sharp corners and edges get smoothened out, seen clearly in the cube example.  You can lessen this effect by pre-processing your model with splits.  On a pre-split edge, such as in the cube, it obtains a more rounded surface with less of a point.
+	<br />
+	<br />
+	In models such as the torus, the loop subdivision is impressive in smoothening the surface.  Notably, the torus remains symmetric after upsampling (unlike the cube).
+	<br />
+	<br />
+	You can obtain a symmetric upsampled cube by pre-processing it with splits; similarly, you can make a torus become unsymmetric by flipping one side's edges entirely, as pictured below.
+	</p>
+	<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/cube.png" align="middle" width="400px"/>
+        <figcaption align="middle">Cube without upsampling</figcaption>
+      </td>
+      <td>
+        <img src="images/cubes.png" align="middle" width="400px"/>
+        <figcaption align="middle">Cube with upsampling</figcaption>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img src="images/torus1.png" align="middle" width="400px"/>
+        <figcaption align="middle">Slightly upsampled torus</figcaption>
+      </td>
+      <td>
+        <img src="images/torus2.png" align="middle" width="400px"/>
+        <figcaption align="middle">Very upsampled torus</figcaption>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img src="images/ex2.png" align="middle" width="400px"/>
+        <figcaption align="middle">Example of pre-split cube</figcaption>
+      </td>
+      <td>
+        <img src="images/ex1.png" align="middle" width="400px"/>
+        <figcaption align="middle">Pre-flipping half a torus</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<h2 align="middle">Section III: Mesh Competition</h2>
+<p>I might participate in this if I have time! Sorry for not being sure, studying for the GMAT is killing me!</p>
+
+<h3 align="middle">Part 7: Design your own mesh!</h3>
+
+</body>
+</html>

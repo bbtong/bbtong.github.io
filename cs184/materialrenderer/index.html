@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>  
+    div.padded {  
+      padding-top: 0px;  
+      padding-right: 100px;  
+      padding-bottom: 0.25in;  
+      padding-left: 100px;  
+    }  
+  </style>
+<style>
+  body {
+    padding: 50px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 200;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>Bryan Tong  |  CS 184</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
+<body>
+<br />
+<h1 align="middle">Assignment 3: PathTracer</h1>
+    <h2 align="middle">Bryan Tong</h2>
+
+    <div class="padded">
+        <p>In this second-half of Project 3, we expand on the material-related rendering capabilities of our PathTracer to include more complicated materials, such as mirror, glass, and microfacted surfaces, environmental lighting scenarios, and perceived depth of lense simulations.</p>
+
+    <h2 align="middle">Part 1: Ray Generation and Intersection</h2>
+    <p>Here, we can see a sequence of renders of CBspheres.dae set to different <code>max_ray_depth</code> levels.  We can see that as we allow more levels of depth for 
+        rays to bounce in, the mirror and glass spheres become increasingly more detailed, well-lit, and the room becomes overall noiser.  We see that with 0 and 1 ray bounces,
+        the surfaces of both mirror and glass are intuitively black, as no light has reflected or refracted.  Refraction becomes barely possible with level 2, only accurately 
+        reflecting and refracting as a glass sphere would on level 3.  On level 4, shadow and light effects coming off of the ball and onto the floor bcome evident.  
+        On level 5 and above, we see the image becomes increasingly noisy as light affects become apparent on the wall.</p>
+    <div align="center">
+        <table style="width=100%">
+            <tr>
+                <td align="middle">
+                <img src="images/p1m0.png" width="400px" />
+                <figcaption align="middle">CBspheres.dae with max_ray_depth set to 0</figcaption>
+                <td align="middle">
+                <img src="images/p1m1.png" width="400px" />
+                <figcaption align="middle">CBspheres.dae with max_ray_depth set to 1</figcaption>
+            </tr>
+            <tr>
+                <td align="middle">
+                <img src="images/p1m2.png" width="400px" />
+                <figcaption align="middle">CBspheres.dae with max_ray_depth set to 2</figcaption>
+                <td align="middle">
+                <img src="images/p1m3.png" width="400px" />
+                <figcaption align="middle">CBspheres.dae with max_ray_depth set to 3</figcaption>
+            </tr>
+            <tr>
+                <td align="middle">
+                <img src="images/p1m4.png" width="400px" />
+                <figcaption align="middle">CBspheres.dae with max_ray_depth set to 4</figcaption>
+                <td align="middle">
+                <img src="images/p1m5.png" width="400px" />
+                <figcaption align="middle">CBspheres.dae with max_ray_depth set to 5</figcaption>
+            </tr>
+            <tr>
+                <td align="middle">
+                <img src="images/p1m100.png" width="400px" />
+                <figcaption align="middle">CBspheres.dae with max_ray_depth set to 100</figcaption>
+                <td align="middle">
+                <img src="images/p1m7.png" width="400px" />
+                <figcaption align="middle">CBspheres.dae with replica settings to staff</figcaption>
+            </tr>
+        </table>
+    </div>
+    <!-- <p>Here is an example of how to include a simple formula:</p>
+    <p align="middle"><pre align="middle">a^2 + b^2 = c^2</pre></p>
+    <p>or, alternatively, you can include an SVG image of a LaTex formula.</p>
+    <p>This time it's your job to copy-paste in the rest of the sections :)</p> -->
+
+
+
+    <h2 align="middle">Part 2: Microfacet Materials</h2>
+    <p>
+        We can see that as alpha increases, the opaque reflectiveness of it decreases, and the diffused (less chrome-like) metallic reflectiveness of it increases.  
+        Interestingly, the dragon appears properly metallic at any of these alpha levels, yet every change in alpha looks vastly different.
+        <br />
+        <br />
+        Examining the differences between cosine hemisphere sampling and my importance sampling method is very difficult to see.  At most, my importance sampling method looks a tiiiny bit harsher, but the lack of clear differences is to be expected.  Both are correct results as mentioned in the spec, my importance sampling method is just more efficient, and thus faster, at rendering.
+        <br />
+        <br />
+        In the last image, we see a very speckly, blue, water-ish dragon.  This is because I looked up the values for liquid H2O, aka water, as a conductor and used the 
+        <code>eta</code> and <code>k</code> values as given on the website in the spec.
+    </p>
+    <div align="center">
+        <table style="width=100%">
+            <tr>
+                <td align="middle">
+                <img src="images/new-p2a0005.png" width="400px" />
+                <figcaption align="middle">alpha = 0.005</figcaption>
+                <td align="middle">
+                <img src="images/new-p2a005.png" width="400px" />
+                <figcaption align="middle">alpha = 0.05</figcaption>
+            </tr>
+            <tr>
+                <td align="middle">
+                <img src="images/new-p2a025.png" width="400px" />
+                <figcaption align="middle">alpha = 0.25</figcaption>
+                <td align="middle">
+                <img src="images/new-p2a05.png" width="400px" />
+                <figcaption align="middle">alpha = 0.5</figcaption>
+            </tr>
+            <tr>
+                <td align="middle">
+                <img src="images/p2bunnydefault.png" width="400px" />
+                <figcaption align="middle">cosine hemisphere sampling</figcaption>
+                <td align="middle">
+                <img src="images/p2bunnymine.png" width="400px" />
+                <figcaption align="middle">my importance sampling</figcaption>
+            </tr>
+            <tr>
+                <td align="middle">
+                <img src="images/p2water.png" width="400px" />
+                <figcaption align="middle">Dragon with conductor material as water</figcaption>
+            </tr>
+        </table>
+    </div>
+
+
+    <h2 align="middle">Part 3: Environment Light</h2>
+    <p>
+        Environment light uses uniform and/or importance sampling to replicate realistic lighting environments by referencing infinitely-far incident radiances 
+        surrounding the entire 3D model.
+        <br />
+        <br />
+        We can see that the <code>save_probability_debug()</code> output matches as in the spec; thus, the distributions seem to be working.  Onwards to comparisons!
+        <br />
+        <br />
+        If we inspect each bunny closely, we can see that the noise levels in uniform sampling are higher in both <code>bunny_unlit</code> and <code>bunny_microfacet</code>.
+        <br />
+        This intuitively makes sense, proving that importance sampling is indeed better and worth all of the math necessary to implement it.
+    </p>
+    <div align="center">
+        <table style="width=100%">
+            <tr>
+                <td align="middle">
+                <img src="images/probability_debug.png" width="700px" />
+                <figcaption align="middle">Output of the probability debug function</figcaption>
+                </td>
+            </tr>
+        </table>
+        <table style="width=100%">
+            <tr>
+                <td align="middle">
+                <img src="images/p3-bunny-unlit-uni.png" width="400px" />
+                <figcaption align="middle">bunny_unlit.dae with uniform sampling</figcaption>
+                <td align="middle">
+                <img src="images/p3-bunny-unlit-imp.png" width="400px" />
+                <figcaption align="middle">bunny_unlit.dae with importance sampling</figcaption>
+            </tr>
+            <tr>
+                <td align="middle">
+                <img src="images/p3-bunny-micro-uni.png" width="400px" />
+                <figcaption align="middle">microfacet_cu with uniform sampling</figcaption>
+                <td align="middle">
+                <img src="images/p3-bunny-micro-imp.png" width="400px" />
+                <figcaption align="middle">microfacet_cu with importance sampling</figcaption>
+            </tr>
+        </table>
+    </div>
+
+
+    <h2 align="middle">Part 4: Depth of Field</h2>
+    <p>
+        A pinhole camera model keeps everything in the photo in-focus.  This works differently from human eyes and real cameras, which we will 
+        model as lenses with finite aperatures.  An example of this in real life on DSLRs is when we use prime lenses, for example, we obtain a very 
+        shallow depth of field.  This is similar to the thin lens we are implementing in this part of the project, simulating said shallow DoF.
+        <br />
+        <br />
+        On the left column of images, we can observe a "focus stack." On the right, a comparison of different aperature sizes.
+    </p>
+    <div align="center">
+        <table style="width=100%">
+            <tr>
+                <td align="middle">
+                <img src="images/p4f43.png" width="400px" />
+                <figcaption align="middle">focal distance = 4.3</figcaption>
+                <td align="middle">
+                <img src="images/p4a17.png" width="400px" />
+                <figcaption align="middle">aperature = 0.17</figcaption>
+            </tr>
+            <tr>
+                <td align="middle">
+                <img src="images/p4f45.png" width="400px" />
+                <figcaption align="middle">focal distance = 4.5</figcaption>
+                <td align="middle">
+                <img src="images/p4a25.png" width="400px" />
+                <figcaption align="middle">aperature = 0.25</figcaption>
+            </tr>
+            <tr>
+                <td align="middle">
+                <img src="images/p4f47.png" width="400px" />
+                <figcaption align="middle">focal distance = 4.7</figcaption>
+                <td align="middle">
+                <img src="images/p4a35.png" width="400px" />
+                <figcaption align="middle">aperature = 0.35</figcaption>
+            </tr>
+            <tr>
+                <td align="middle">
+                <img src="images/p4f49.png" width="400px" />
+                <figcaption align="middle">focal distance = 4.9</figcaption>
+                <td align="middle">
+                <img src="images/p4a7.png" width="400px" />
+                <figcaption align="middle">aperature = 0.7</figcaption>
+            </tr>
+        </table>
+    </div>
+       
+
+
+
+</div>
+</body>
+</html>
+
+
+
+
