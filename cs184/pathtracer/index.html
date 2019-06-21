@@ -23,26 +23,17 @@
     font-family: 'Source Sans Pro', sans-serif;
   }
 </style>
-<title>CS 184 PathTracer - Bryan Tong</title>
+<title>Path Tracer {bt}</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
 </head>
 <body>
 <br />
-<h1 align="middle">Assignment 3: PathTracer</h1>
-    <h2 align="middle">Bryan Tong</h2>
-
-    <!-- INTRODUCTION -->
-    <div class="padded">
-      <p>In this project, I implemented the basics of a physically-based path-tracing renderer. 
-        We used ray-scene intersection, bounding volume hierarchies, physically-based lighting principles, various sampling methods, and even implemented adaptive sampling. 
-        Overall, this project was an amazing learning experience -- I was able to visually see and practically learn from non-theorhetical code how these abstract topics and algorithms 
-        discussed in lecture translate to direct visual results.  I am looking forward to completing all of the features in Project 3-2; however, let's now dive into the 
-        details of this project!
-    </p>
+<h1>Path Tracer</h1>
+  <h2>Bryan Tong</h2>
 
     <!-- PART 1 -->
-    <h2 align="middle">Part 1: Ray Generation and Intersection</h2>
+    <h2>Part 1: Ray Generation and Intersection</h2>
     <p>To kick off this project, I began with a very basic function that essentially calculates
         an average irradiance of one pixel.  I used a <code>ns_aa</code> variable and a <code>gridSampler</code> 
         to find random samples totaling up to <code>ns_aa</code> number of samples. Then, I generate the ray and evaluate its radiance.
@@ -97,7 +88,7 @@
     </div>
 
     <!-- PART 2 -->
-    <h2 align="middle">Part 2: Bounding Volume Hierarchy</h2>
+    <h2>Part 2: Bounding Volume Hierarchy</h2>
     <p>
         To speed up rendering of large <code>.dae</code> files, I implemented a Bounding Volume Hierarchy (BVH) system 
         to speed up the PathTracer.  The BVH system can be broken down into some main components: the construction 
@@ -171,7 +162,7 @@
       </div>
 
     <!-- PART 3 -->
-    <h2 align="middle">Part 3: Direct Illumination</h2>
+    <h2>Part 3: Direct Illumination</h2>
     <p>
       To kick off implementing direct lighting, we first had to fill in the two <code>DiffuseBSDF</code> functions for formalities sake.  Although the
        <code>f</code> function is a constant, <code>sample_f</code> uses the built in sampler for <code>wi</code>.  With 
@@ -241,7 +232,7 @@
       </div>
 
     <!-- PART 4 -->
-    <h2 align="middle">Part 4: Indirect Lighting</h2>
+    <h2>Part 4: Indirect Lighting</h2>
     <p>For the next part of the project, we want to be able to render images with full global illumination.  This requires probabilistic light bouncing 
       calculations, which we will refer to as indirect lighting. To accomplish this, we will focus heavily on a function called,<code>est_radiance_global_illumination</code>, gives us an estimate of the total radiance using global illumination, from a specific direction, which 
       is broken down into some more subparts, as follows:
@@ -361,7 +352,7 @@
       </div>
 
     <!-- PART 5 -->
-    <h2 align="middle">Part 5: Adaptive Sampling</h2>
+    <h2>Part 5: Adaptive Sampling</h2>
     <p>
       In the last part of the project, I implemented adaptive sampling.  To do this, 
       I followed the spec's very simple algorithm that pixel-by-pixel detects if the 
@@ -395,28 +386,6 @@
           </tr>
         </table>
       </div>
-
-    <!-- PART 6 -->
-    <h2 align="middle">Challenge Parts</h2>
-    <p>
-      I didn't dive into any challenge sections except ensuring that all of my functions had 
-      in-memory variables pulled out of loops.  This resulted in about a <code>2x</code> speedup 
-      in Part 2, after I ensured to not continuously initialize and toss away variables.
-      <br />
-      <br />
-      Thanks for reading!
-    </p>
-
-    <!-- <h2 align="middle">A Few Notes On Webpages</h2>
-        <p>Here are a few problems students have encountered in the past. You will probably encounter these problems at some point, so don't wait until right before the deadline to check that everything is working. Test your website on the instructional machines early!</p>
-        <ul>
-        <li>Your main report page should be called index.html.</li>
-        <li>Be sure to include and turn in all of the other files (such as images) that are linked in your report!</li>
-        <li>Use only <em>relative</em> paths to files, such as <pre>"./images/image.jpg"</pre>
-        Do <em>NOT</em> use absolute paths, such as <pre>"/Users/student/Desktop/image.jpg"</pre></li>
-        <li>Pay close attention to your filename extensions. Remember that on UNIX systems (such as the instructional machines), capitalization matters. <pre>.png != .jpeg != .jpg != .JPG</pre>
-        <li>Be sure to adjust the permissions on your files so that they are world readable. For more information on this please see this tutorial: <a href="http://www.grymoire.com/Unix/Permissions.html">http://www.grymoire.com/Unix/Permissions.html</a></li>
-        <li>And again, test your website on the instructional machines early!</li> -->
 </div>
 </body>
 </html>

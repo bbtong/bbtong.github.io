@@ -1,13 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<style>
+  <style>  
+    div.padded {  
+      padding-top: 0px;  
+      padding-right: 50px;  
+      padding-bottom: 0.25in;  
+      padding-left: 50px;  
+    }  
+  </style> 
+  <style>
   body {
-    padding: 100px;
+    padding: 50px;
     width: 1000px;
     margin: auto;
     text-align: left;
-    font-weight: 300;
+    font-weight: 200;
     font-family: 'Open Sans', sans-serif;
     color: #121212;
   }
@@ -23,22 +31,21 @@
 
 <body>
 
-<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2019</h1>
-<h1 align="middle">Project 4: Cloth Simulator</h1>
-<h2 align="middle">Bryan Tong, btong@berkeley.edu</h2>
+<h1>Cloth Simulator</h1>
+<h2>Bryan Tong, btong@berkeley.edu</h2>
 
 <br><br>
 
 <div>
 
-<h2 align="middle">Overview</h2>
+<h2>Overview</h2>
 <p>For this project, I created a cloth simulator featuring real-time simulation and collisions. 
   I used spring models, mass models, concepts of bending constraints, varying collisions systems, and lots of 
   self-collision and deformation constraints.  I learned a lot about struggling to understand these kinematic-style
   problems, e.g. external forces and spring correction forces. Hooke's Law, Provot 1995, and Verlet integration were all interesting concepts to apply and see visual results to!  Overall, this project has involved the most physics I've used since high school.
 </p>
 
-<h2 align="middle">Part 1: Masses and springs</h2>
+<h2>Part 1: Masses and springs</h2>
 <p>To implement the mass and spring model as from lecture, 
 I followed the spec to create constrained point-mass grids. </p>
 <div align="center">
@@ -58,7 +65,7 @@ I followed the spec to create constrained point-mass grids. </p>
     </tr>
   </table>
 </div>
-<h2 align="middle">Part 2: Simulation via numerical integration</h2>
+<h2>Part 2: Simulation via numerical integration</h2>
 <p>After implementing the many mathematical requirements of part 2, we can finally test our cloth simulation. 
 In the screenshots below, we can observe the effects of changing many various parameters of our cloth simulation 
 regarding spring mechanics and forces.</p>
@@ -90,7 +97,7 @@ less than half of default resulted in very tubulent physics as the cloth took a 
     </tr>
   </table>
 </div>
-<h2 align="middle">Part 3: Handling collisions with other objects</h2>
+<h2>Part 3: Handling collisions with other objects</h2>
 <p>In this stage of the project, we got realistic collisions and cloth hanging physics implemented with a sphere and a plane.  <br /><br />
 We can interestingly see how (as expected) a low ks results in a droopier cloth, i.e., less spring resistance.  Conversely, a high ks results in a very stiff drape, representative of strong elasticity and spring forces.  It interestingly still has some strong folds, although much fewer of them.
 </ul>
@@ -114,7 +121,7 @@ We can interestingly see how (as expected) a low ks results in a droopier cloth,
     </tr>
   </table>
 </div>
-<h2 align="middle">Part 4: Handling self-collisions</h2>
+<h2>Part 4: Handling self-collisions</h2>
 <ul>
 <p>After implementing self-collision handling, we can see that clipping no longer occurs with our cloth object. 
 This is due to building a strong hash function for 3D point handling and creating a spatial map to avoid clipping.
@@ -170,7 +177,7 @@ Some interesting evaluations follows:</p>
     </tr>
   </table>
 </div>
-<h2 align="middle">Part 5: Shaders</h2>
+<h2>Part 5: Shaders</h2>
 <ul>
 <li>Vertex shaders apply transforms to vertices. These shaders modify geometric properties using vectors and in OpenGL, set final position of the vertex, in combination with the fragment shaders.</li>
 <li>Fragment shaders process fragments resulting from rasterization. These shaders take in geometry found by the vertex shader, then computes and writes a color into <code>out_color</code>, as we modify in the project.</li>
@@ -207,10 +214,6 @@ Some interesting evaluations follows:</p>
     </tr>
   </table>
 </div>
-<h2 align="middle">Extra credit: Additional cloth simulation features!</h2>
-<p>I didn't have time to do EC, since I've been sick + had to go to the ER. :(
-<br /><br />Hence the day-late submission, which I have received an extension for.</p>
-
 
 </body>
 </html>

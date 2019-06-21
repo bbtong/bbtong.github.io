@@ -1,42 +1,42 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<style>  
-    div.padded {  
-      padding-top: 0px;  
-      padding-right: 100px;  
-      padding-bottom: 0.25in;  
-      padding-left: 100px;  
-    }  
-  </style>
-<style>
-  body {
-    padding: 50px;
-    width: 1000px;
-    margin: auto;
-    text-align: left;
-    font-weight: 200;
-    font-family: 'Open Sans', sans-serif;
-    color: #121212;
-  }
-  h1, h2, h3, h4 {
-    font-family: 'Source Sans Pro', sans-serif;
-  }
-</style>
-<title>Bryan Tong  |  CS 184</title>
+    <style>  
+        div.padded {  
+          padding-top: 0px;  
+          padding-right: 50px;  
+          padding-bottom: 0.25in;  
+          padding-left: 50px;  
+        }  
+      </style> 
+      <style>
+      body {
+        padding: 50px;
+        width: 1000px;
+        margin: auto;
+        text-align: left;
+        font-weight: 200;
+        font-family: 'Open Sans', sans-serif;
+        color: #121212;
+      }
+      h1, h2, h3, h4 {
+        font-family: 'Source Sans Pro', sans-serif;
+      }
+    </style>
+<title>Materials Renderer {bt}</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 </head>
 <body>
 <br />
-<h1 align="middle">Assignment 3: PathTracer</h1>
-    <h2 align="middle">Bryan Tong</h2>
+<h1>Materials Rendering</h1>
+    <h2>Bryan Tong</h2>
 
-    <div class="padded">
-        <p>In this second-half of Project 3, we expand on the material-related rendering capabilities of our PathTracer to include more complicated materials, such as mirror, glass, and microfacted surfaces, environmental lighting scenarios, and perceived depth of lense simulations.</p>
+    <div>
+        <p>This expands upon my Path Tracer to include more complicated materials, such as mirror, glass, and microfacted surfaces, environmental lighting scenarios, and perceived depth of lense simulations.</p>
 
-    <h2 align="middle">Part 1: Ray Generation and Intersection</h2>
+    <h2>Part 1: Ray Generation and Intersection</h2>
     <p>Here, we can see a sequence of renders of CBspheres.dae set to different <code>max_ray_depth</code> levels.  We can see that as we allow more levels of depth for 
         rays to bounce in, the mirror and glass spheres become increasingly more detailed, well-lit, and the room becomes overall noiser.  We see that with 0 and 1 ray bounces,
         the surfaces of both mirror and glass are intuitively black, as no light has reflected or refracted.  Refraction becomes barely possible with level 2, only accurately 
@@ -85,7 +85,7 @@
 
 
 
-    <h2 align="middle">Part 2: Microfacet Materials</h2>
+    <h2>Part 2: Microfacet Materials</h2>
     <p>
         We can see that as alpha increases, the opaque reflectiveness of it decreases, and the diffused (less chrome-like) metallic reflectiveness of it increases.  
         Interestingly, the dragon appears properly metallic at any of these alpha levels, yet every change in alpha looks vastly different.
@@ -132,7 +132,7 @@
     </div>
 
 
-    <h2 align="middle">Part 3: Environment Light</h2>
+    <h2>Part 3: Environment Light</h2>
     <p>
         Environment light uses uniform and/or importance sampling to replicate realistic lighting environments by referencing infinitely-far incident radiances 
         surrounding the entire 3D model.
@@ -175,7 +175,7 @@
     </div>
 
 
-    <h2 align="middle">Part 4: Depth of Field</h2>
+    <h2>Part 4: Depth of Field</h2>
     <p>
         A pinhole camera model keeps everything in the photo in-focus.  This works differently from human eyes and real cameras, which we will 
         model as lenses with finite aperatures.  An example of this in real life on DSLRs is when we use prime lenses, for example, we obtain a very 

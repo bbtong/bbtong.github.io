@@ -15,7 +15,7 @@
     font-family: 'Source Sans Pro', sans-serif;
   }
 </style>
-<title>CS 184 Rasterizer</title>
+<title>Image Rasterizer {bt}</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro|Montserrat|Raleway" rel="stylesheet">
 </head>
@@ -23,9 +23,8 @@
 
 <body>
 
-<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2019</h1>
-<h1 align="middle">Project 1: Rasterizer</h1>
-<h2 align="middle">Bryan Tong, 26548098</h2>
+<h1>Image Rasterizer</h1>
+<h2>Bryan Tong</h2>
 
 <br><br>
 
@@ -41,9 +40,9 @@
    to antialiasing, performing sampling and interpolation - that's crazy. Implementing something like trilinear filtering, 
    which I have seen extensively in video games, help tied the theoretical concepts of computer graphics to something concrete.</p>
 
-<h2 align="middle">Section I: Rasterization</h2>
+<h2>Section I: Rasterization</h2>
 
-<h3 align="middle">Part 1: Rasterizing single-color triangles</h3>
+<h3>Part 1: Rasterizing single-color triangles</h3>
 <p>
   Rasterizing triangles is a key basic step to computer graphics, 
   involving the processing of primitive points on an integer grid representing pixels.
@@ -74,7 +73,7 @@
   </table>
 </div>
 
-<h3 align="middle">Part 2: Antialiasing triangles</h3>
+<h3>Part 2: Antialiasing triangles</h3>
 <p>
   To implement supersampling for AA, I divided each pixel into its subsamples,
   via mathematical manipulation of <code>1 / float((sqrt(sample_rate) * sqrt(sample_rate))</code>
@@ -100,7 +99,7 @@
   an effect of the supersampling.
 </p>
 
-<div align="middle">
+<div>
   <table style="width=100%">
     <tr>
       <td>
@@ -122,7 +121,7 @@
 
 
 
-<h3 align="middle">Part 3: Transforms</h3>
+<h3>Part 3: Transforms</h3>
 <p>The inspiration of this dancing cubeman is music.  I was sitting in Blue Bottle Coffee, listening to some groovy beats.  Headphones on blast, I tuned out the world and tweaked my groovy dancing cubeman to best represent my inner-self.  It also used a nice combination of every transformation we implemented.</pCreate>
   <div align="middle">
     <table style="width=100%">
@@ -136,9 +135,9 @@
   </div>
 
 
-<h2 align="middle">Section II: Sampling</h2>
+<h2>Section II: Sampling</h2>
 
-<h3 align="middle">Part 4: Barycentric coordinates</h3>
+<h3>Part 4: Barycentric coordinates</h3>
 <p>
    Barycentric coordinates allow you to interpolate a color via the weighted distance from three points,
    traditionally defined as alpha, beta, and gamma, representing red, green, blue respectively.  They are also interestingly affine coordinates.
@@ -171,7 +170,7 @@
   </table>
 </div>
 
-<h3 align="middle">Part 5: "Pixel sampling" for texture mapping</h3>
+<h3>Part 5: "Pixel sampling" for texture mapping</h3>
 <p>
 Pixel sampling uses barycentric coordinates to apply a texture map onto an image: a <code>.png</code> in our scenario.
 <br /> <br />
@@ -221,7 +220,7 @@ per pixel looks extremely smooth, but also sharper as a whole.
 </div>
 
 
-<h3 align="middle">Part 6: "Level sampling" with mipmaps for texture mapping</h3>
+<h3>Part 6: "Level sampling" with mipmaps for texture mapping</h3>
   <p>
     Level sampling is when we use a specific sample from a series of images, each level with resolutions respectively lowered by the power of 2.
     Level sampling helps us pick a high-level mipmap sample for near objects, and a low-resolution, deeper depth sample for minified textures in the distance.
@@ -304,11 +303,6 @@ per pixel looks extremely smooth, but also sharper as a whole.
       </tr>
     </table>
   </div>
-
-
-
-<h2 align="middle">Section III: Art Competition</h2>
-<p>I didn't create any art, but I'll be sure to vote! :)</p>
 
 </body>
 </html>
