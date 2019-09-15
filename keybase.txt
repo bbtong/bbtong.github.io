@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/btong
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://btong.me
+  * I am btong (https://keybase.io/btong) on keybase.
+  * I have a public key ASAllPPK4IJFy--WSML8BDaKFkH2-KU6YkyE2Mz_FWkbago
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01202594f3cae08245cbef9648c2fc04368a1641f6f8a53a624c84d8ccff15691b6a0a",
+      "host": "keybase.io",
+      "kid": "01202594f3cae08245cbef9648c2fc04368a1641f6f8a53a624c84d8ccff15691b6a0a",
+      "uid": "fd7d4b6649e39afe4ed1e1deb2923619",
+      "username": "btong"
+    },
+    "merkle_root": {
+      "ctime": 1568586297,
+      "hash": "d463f6707fbae4a3b443052fe2c3f877604ee06a33c6d5fb121e597a1d572688e6333273fa69b00f96b6eb03a85a8d33cf49a0bf8d551dd64aa39c5c27e5941d",
+      "hash_meta": "35d32716efb82ea4a84b3fa4fe1944674dddeb06d33fca6d7b0264fcce052743",
+      "seqno": 7421142
+    },
+    "service": {
+      "entropy": "UMDVBvI1krM3Mz+ppXCF6Abr",
+      "hostname": "btong.me",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "4.4.2"
+  },
+  "ctime": 1568586301,
+  "expire_in": 504576000,
+  "prev": "cebe03072456c40f25d074a386e787fdf868684798abad243a08100c9c696060",
+  "seqno": 12,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgJZTzyuCCRcvvlkjC/AQ2ihZB9vilOmJMhNjM/xVpG2oKp3BheWxvYWTESpcCDMQgzr4DByRWxA8l0HSjhueH/fhoaEeYq60kOggQDJxpYGDEIOKgoUSB1sR6xjfg00icfJsdXShBmK5noMqW+BMKBo4PAgHCo3NpZ8RAT6VgvcsVuUGSHkXiXwnWBUywWs5rYbE0h0VT1gdmZIlVm2cwZTIamiRIAoLfwZF3kqDvRpY/karpqMNg57DaBahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIMEman2dFyukwM3Xgf5vCpZsgE4mqAn0jVbti/+cY3peo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/btong
+
+==================================================================
