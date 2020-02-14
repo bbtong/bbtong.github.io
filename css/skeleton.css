@@ -155,7 +155,28 @@ h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
 }
 
 p {
-  margin-top: 0; }
+  margin-top: 0; 
+}
+
+.unicorn {
+  font-family: 'Nunito', sans-serif;
+  background: -webkit-linear-gradient(left, #a6f8ff, #ffaabc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.vmw {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  color: #DDDDDD;
+}
+
+.pivotal {
+  font-weight: 600;
+  color: #00AE9E;
+}
+
+
 
 
 /* Links
@@ -388,10 +409,6 @@ hr {
   border-width: 0;
   border-top: 1px solid #E1E1E1; }
 
-.pivotal {
-  font-weight: 600;
-  color: #00AE9E;
-}
 
 .letter {
   display: inline-block;
