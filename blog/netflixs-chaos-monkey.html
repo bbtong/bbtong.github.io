@@ -46,8 +46,51 @@
         </h4>
         <!-- Subheader text -->
         <p>
-            WIP
+            tl;dr - RNG exploding (your own) production environments is good
         </p>
+        <p style="font-family: monospace;">
+        Terminology:
+        <br/>
+        Applications = {websites, backends, scripts, systems}
+        <br/>
+        CI/CD = continuous integration, continuous delivery
+        <br/>
+        Better = {faster, more resilient, less costly}
+        <br/>
+        Fault-tolerant = easily recoverable, but not neccesarily resistant
+        </p>
+        <p>
+          As the advent of massive-scale virtual cloud environments prevailed, applications became progressively and ever-increasingly more complex. Systems that formerly ran on a single, generic desktop as a server began to split their workloads across servers. Data partitioning, redundancies, replications, sharding, etc. all became terminology commonplace to us in computing. The current "meta" basically revolves around lightweight Linux VMs, hosted on your platform of choice (AWS, GCE, Azure, vSphere, k8s, CF) being orchestrated by their appropriate tooling. 
+        </p>
+        <p>
+          This environment of cloud computing has lead to some obvious results: applications are more robust than ever, data is rarely lost with a single point of failure, and VMs can practically grow as if they are an organic substance -- with an equally growing amount of philosophical computing discussions about the state of these systems. VMs managed by systems such as Kubernetes (k8s) are expected to be stable yet unneccesary for the system to function as a whole. Like a well-balanced society, a single VM crashing should not instantly crash the system with catastrophic consequence. Note the intentional separation of the concepts of crashing and consequence. VMs should be designed to crash; VMs should not crash with bad consequenses.
+        </p>
+        <p>
+          Thus, (good) products exist to solve issues, and crashing VMs is indeed a very real, and more importantly - a very expensive issue. Poorly designed systems may rely on VMs (vim-forbid specifically named string literal VM references), and the death of a small node could result in downed CDNs, payment portals, API gateways, security systems, monitoring, touchscreen fridges, modern automobiles, cities' water systems, and/or even nuclear reactors. That escalated quickly -- yes, and this escalation is even more important if you're the designer of popular open-source systems (e.g. Linux Foundation supported software). There are a lot of things to consider about distributed systems, and few _really_ think about how their glitchy fridge might contain the same open-source code as critical infrastructure. 
+        <p>
+        <p>
+          Personally, I would consider Netflix to be less important than my water supply, but more important than a touchscreen fridge. Maybe they'll agree too. Regardless, Netflix has some brilliant engineers that understand the history and impact of well-designed distributed systems, as their company has notoriously rough standards for the entertainment industry. They run on modern tech stacks with AWS, GCE, Kubernetes, and even developed and maintain a product focused on our topic at hand: chaos engineering.
+        </p>
+        <p>
+          Netflix OSS develops and maintains <a href="https://github.com/Netflix/chaosmonkey">Chaos Monkey</a>, which is a Golang-based application that integrates with Spinnaker (delivery-side of CI/CD) to, essentially, push the VMs that push you content. Aptly named (and kinda cute), Chaos Monkey randomly kills off VMS in your _actual production environment_ to encourage engineers to write actually reliable, fault-tolerant systems. Not pseudo-tolerant, pseudo-well-tested, but oh-lawd-possible-fire-in-prod live environment tested systems. By artifically introducing these failures, engineers (albeit stressfully) get forced into developing and maintaining such thoughtfully-designed and well-written software that codebases measurably become better.
+        </p>
+        <p>
+          Now, Netflix takes the spotlight here, as they arguably have the most well-known and aggressive implementation of chaos engineering software. Companies strive to have fault-tolerant products and will spend marketing budget on this, yet shy (or run) away from the concept of <a href="https://en.wikipedia.org/wiki/Chaos_engineering#Chaos_Gorilla">dropping entire AWS regions</a> on prod. Though it sounds extreme, every Fortune 500 Company shall one day experience issues such as this, on actual production environments, as we've learned as engineers purely through experience and history. Hurricanes may wipe out an entire region's datacenter, mice may destroy an on-prem cluster's power supply cable, or maybe an engineer just doesn't understand <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/">liveness probes</a> and tries to connect to a faulty VM. Regardless, the takeaway here is that as software engineers (or system architects, designers, whatever) we should be foreseeing disasters, especially historically common ones; preparing for the worst; and not letting ourselves get lazy as systems become more complex and grandiose in scale.
+        </p>
+        <p>
+          Uh, okay -- that's all.
+        </p>
+
+          <div style="color: #777777;">
+          </p>
+            p.s. - this is my first blog post on btong.me, inspired by my current research on distributed systems. let's start small and learn together.
+          </p>  
+          <p>
+            thanks for reading. i'll try to implement comments in the future; but, for now, writing in strictly html is cathartic as h3ck.
+            <br />
+            - bryan
+          </p>
+        </div>
 
         <!-- Buttons! Yay buttons! -->
         <a class="button" href="../blog.html">Back to Blog</a>
