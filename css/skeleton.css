@@ -341,8 +341,9 @@ code {
   margin: 0 .2rem;
   font-size: 90%;
   white-space: nowrap;
+  color: #004c05;
   background: #F1F1F1;
-  border: 1px solid #E1E1E1;
+  border: 1px solid #C3C3C3;
   border-radius: 4px; }
 pre > code {
   display: block;
