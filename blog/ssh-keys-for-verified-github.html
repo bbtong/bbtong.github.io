@@ -55,32 +55,32 @@
         <p>
           <ol>
             <li>Make sure you&#39;re using <a href="https://git-scm.com/">latest git</a> (&gt;= 2.34.0):<ol>
-            <li type="i">(For Mac) <code>which git</code> by default on macOS will be <code>/usr/bin/git</code> from Xcode. We don&#39;t want to use this version.</li>
-            <li type="i">(For Mac)  Install the latest git via Brew and then run <code>brew unlink git &amp;&amp; brew link git</code></li>
-            <li type="i"><code>which git</code> should reveal now <code>/user/local/bin/git</code></li>
+            <li type="a">(For Mac) <code>which git</code> by default on macOS will be <code>/usr/bin/git</code> from Xcode. We don&#39;t want to use this version.</li>
+            <li type="a">(For Mac)  Install the latest git via Brew and then run <code>brew unlink git &amp;&amp; brew link git</code></li>
+            <li type="a"><code>which git</code> should reveal now <code>/user/local/bin/git</code></li>
             </ol>
             </li>
             <li>Set Git to use SSH for keys:<ol>
-            <li type="i">Run <code>git config --global gpg.format ssh</code></li>
-            <li type="i">Be warned that if you need proper GPG too, this isn&#39;t the guide for you.</li>
+            <li type="a">Run <code>git config --global gpg.format ssh</code></li>
+            <li type="a">Be warned that if you need proper GPG too, this isn&#39;t the guide for you.</li>
             </ol>
             </li>
             <li>Set your signing key:<ol>
-            <li type="i">Check for your <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys">existing SSH keys</a></li>
-            <li type="i">(Situational) If keys are too old or short, check <a href="https://stackoverflow.com/questions/67361592/git-push-with-ssh-remote-error-load-key-path-to-file-id-rsa-invalid-format">this StackOverflow issue</a>.</li>
-            <li type="i"><code>pbcopy &lt; ~/.ssh/id_rsa.pub</code> or whatever your key is called. Use ed25519 if you prefer.</li>
-            <li type="i">Double check it&#39;s your public key. 👀</li>
-            <li type="i">Set global configs: <code>git config --global user.signingkey &#39;PASTE-YOUR-PUBKEY-HERE&#39;</code></li>
+            <li type="a">Check for your <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys">existing SSH keys</a></li>
+            <li type="a">(Situational) If keys are too old or short, check <a href="https://stackoverflow.com/questions/67361592/git-push-with-ssh-remote-error-load-key-path-to-file-id-rsa-invalid-format">this StackOverflow issue</a>.</li>
+            <li type="a"><code>pbcopy &lt; ~/.ssh/id_rsa.pub</code> or whatever your key is called. Use ed25519 if you prefer.</li>
+            <li type="a">Double check it&#39;s your public key. 👀</li>
+            <li type="a">Set global configs: <code>git config --global user.signingkey &#39;PASTE-YOUR-PUBKEY-HERE&#39;</code></li>
             </ol>
             </li>
             <li>Go to <a href="https://github.com/settings/keys">GitHub Settings &gt; Keys</a><ol>
-            <li type="i">Make sure you add your <code>id_rsa.pub</code> (or equivalent) as a <em>Signing Key</em>, not the Authentication Key that you probably already use it for.</li>
-            <li type="i">Save, then try out a test commit to see your verified badge.</li>
+            <li type="a">Make sure you add your <code>id_rsa.pub</code> (or equivalent) as a <em>Signing Key</em>, not the Authentication Key that you probably already use it for.</li>
+            <li type="a">Save, then try out a test commit to see your verified badge.</li>
             </ol>
             </li>
             <li>Commit with the newly needed flags: `git commit -S -s -m &quot;message-here&quot;<ol>
-            <li type="i"><code>-S</code> cryptographically signs</li>
-            <li type="i"><code>-s</code> adds &quot;Signed-off-by&quot;</li>
+            <li type="a"><code>-S</code> cryptographically signs</li>
+            <li type="a"><code>-s</code> adds &quot;Signed-off-by&quot;</li>
             </ol>
             </li>
             </ol>            
