@@ -31,7 +31,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'UA-73463502-1');
   </script>
 </head>
@@ -44,7 +43,7 @@
         <h4>
           <div class="text">Using your SSH Public Key for Verified GitHub Commits</div>
         </h4>
-        <!-- Subheader text -->
+        <!-- ARTICLE BODY -->
         <p>
             tl;dr - update git + ssh + github = sweet green badge
         </p>
@@ -52,23 +51,42 @@
         <p>
           Using your SSH public keys to gain that green "Verified" badge on GitHub is very much possible and easy. Here's how to do it:
         </p>
+
         <p>
           <ol>
-            <li>Make sure you're using core git. (e.g., not Apple's git which is default on macOS.)</li>
-            <ol type="i">
-              <li>Ensure git is installed via Homebrew and on latest by running <span style="font-family: monospace;">which git</span></li>
-              <li>The proper installation lives at <span style="font-family: monospace;">/user/bin/local/git</span></li>
+            <li>Make sure you&#39;re using <a href="https://git-scm.com/">latest git</a> (&gt;= 2.34.0):<ol>
+            <li>(For Mac) <code>which git</code> by default on macOS will be <code>/usr/bin/git</code> from Xcode. We don&#39;t want to use this version.</li>
+            <li>(For Mac)  Install the latest git via Brew and then run <code>brew unlink git &amp;&amp; brew link git</code></li>
+            <li><code>which git</code> should reveal now <code>/user/local/bin/git</code></li>
             </ol>
-            <li>WIP
-              <ol type="i">
-                <li>Black tea</li>
-                <li>Green tea</li>
-              </ol>
             </li>
-            <li>Milk</li>
-          </ol>
+            <li>Set Git to use SSH for keys:<ol>
+            <li>Run <code>git config --global gpg.format ssh</code></li>
+            <li>Be warned that if you need proper GPG too, this isn&#39;t the guide for you.</li>
+            </ol>
+            </li>
+            <li>Set your signing key:<ol>
+            <li>Check for your <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys">existing SSH keys</a></li>
+            <li>(Situational) If keys are too old or short, check <a href="https://stackoverflow.com/questions/67361592/git-push-with-ssh-remote-error-load-key-path-to-file-id-rsa-invalid-format">this StackOverflow issue</a>.</li>
+            <li><code>pbcopy &lt; ~/.ssh/id_rsa.pub</code> or whatever your key is called. Use ed25519 if you prefer.</li>
+            <li>Double check it&#39;s your public key. 👀</li>
+            <li>Set global configs: <code>git config --global user.signingkey &#39;PASTE-YOUR-PUBKEY-HERE&#39;</code></li>
+            </ol>
+            </li>
+            <li>Go to <a href="https://github.com/settings/keys">GitHub Settings &gt; Keys</a><ol>
+            <li>Make sure you add your <code>id_rsa.pub</code> (or equivalent) as a <em>Signing Key</em>, not the Authentication Key that you probably already use it for.</li>
+            <li>Save, then try out a test commit to see your verified badge.</li>
+            </ol>
+            </li>
+            <li>Commit with the newly needed flags: `git commit -S -s -m &quot;message-here&quot;<ol>
+            <li><code>-S</code> cryptographically signs</li>
+            <li><code>-s</code> adds &quot;Signed-off-by&quot;</li>
+            </ol>
+            </li>
+            </ol>            
+        </p>
 
-          <div style="color: #777777;"> 
+        <div style="color: #777777;"> 
           <p>
             hope it helps.
             <br />
