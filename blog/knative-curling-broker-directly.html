@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic Page Needs -->
+  <meta charset="utf-8">
+  <title>Bryan Tong | btong.me</title>
+  <meta name="description" content="Homepage of Bryan Tong, Software Engineer.">
+  <meta name="author" content="Bryan Tong">
+  <meta name="keywords" content="Bryan Tong" />
+  <meta property="og:type" content="website" />
+	<meta property="og:title" content="Bryan Tong" />
+	<meta property="og:description" content="Homepage of Bryan Tong, Software Engineer." />
+	<meta property="og:image" content="http://btong.me/images/favicon.png" />
+	<link rel="shortcut icon" href="../images/favicon.png" type="image/png" />
+	<link rel="shortcut icon" href="http://btong.me/favicon.png" type="image/x-icon">
+  <!-- Mobile Specific Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@300;400;500;600;700&family=Nunito:wght@700&family=Raleway:wght@300;400;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- CSS  -->
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/skeleton.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <!-- Google stuff -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-73463502-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-73463502-1');
+  </script>
+</head>
+
+<body>
+  <!-- Primary Page Layout -->
+  <div class="container" style="padding: 0 0 100px 0">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 20%">
+        <h1>
+          <div class="text">Knative — Curling the Knative Broker Directly</div>
+        </h1>
+        <!-- ARTICLE BODY -->
+        <p>
+          ↳ &#128197; 8/25/2022 &#9997; guide, software, programming, knative
+        </p>
+        
+        <p>
+          When using Knative, a developer may want to sometimes directly <code>curl</code> the broker without configuring a source, as Knative traditionally requires. This guide explains how to work around that for a faster development cycle.
+        </p>
+
+        <p>
+            <ol>
+                <li>From the Knative documentation, the suggested interacted path is that your <code>curl</code> hits 
+                     a configured Knative Source, which is sent to a Broker, which then sends (in a one-to-many relationship) 
+                      to Sinks (consumers). While this is great for production-ready scenarios, a developer may not want to 
+                       configure all of these CRDs during a simple development test.
+                    <ol>
+                        <li type="a">Ensure you have a working Knative installation (verified on Knative 1.8)</li>
+                        <li type="a">Ensure you have a working Knative Broker configured</li>
+                    </ol>
+                </li>
+                <li>Port forward to the Broker's ingress: <code>kubectl port-forward -n knative-eventing svc/broker-ingress 8080:80</code></li>
+                <li>curl to localhost:
+                    <code>
+                        curl -w'\n' http://localhost:8080/demo/default \
+                            -H "ce-id: 0001" \
+                            -H "ce-specversion: 1.0" \
+                            -H "ce-type: hello" \
+                            -H "ce-source: somewhere" \
+                            -H "Content-Type: application/json" \
+                            -X POST -i
+                    </code>
+                </li>
+            </ol>            
+        </p>
+
+        <div style="color: #777777;"> 
+          <p>
+            Written as of Knative 1.8 -- hope this helps.
+            <br />
+            - bryan
+          </p>
+        </div>
+
+        <!-- Buttons! Yay buttons! -->
+        <a class="button" href="../blog.html">Back to Blog</a>
+        <a class="button" href="../index.html">Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+<!-- End Document -->
+</body>
+</html>
