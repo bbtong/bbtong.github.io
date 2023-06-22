@@ -179,8 +179,16 @@ p {
   -webkit-text-fill-color: transparent;
 }
 
-.vmw {
+.vmware {
   font-family: 'Nunito', sans-serif;
+  background: -webkit-linear-gradient(left, #00BFD2, #78BC20);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+.anduril {
+  font-family: 'Helvetica Now', sans-serif;
   font-weight: 600;
   color: #DDDDDD;
 }
