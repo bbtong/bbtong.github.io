@@ -63,103 +63,52 @@
             Professionally, I currently work on Kubernetes, distributed systems, and functions as a service. On the side, I love studying Japanese and gardening.
             I also have a slowly growing <a href="https://www.youtube.com/c/BryanTongC">YouTube channel</a> with a few videos!
           </p>
-          <p>
-            Media Mentions: 
-              <a href="https://news.lib.berkeley.edu/virtual-reality">Berkeley</a>, 
-              <a href="https://www.nbcnews.com/video/how-diversity-shapes-multiracial-experiences-779076675976">NBC</a>, 
-              <a href="https://www.diablomag.com/October-2019/Virtual-Reality-in-Oakland/">Diablo Magazine</a>, 
-              <a href="https://technical.ly/baltimore/2016/07/21/10-baltimore-built-video-games-worth-playing/">Technical.ly</a>, 
-              <a href="https://technical.ly/baltimore/2016/09/01/voting-now-open-4th-annual-baltimore-innovation-awards/">(x2)</a>
-          </p>
         </div>
-      </div>
-    </div>
 
-  </body>
+        <!-- Articles -->
+        <h4>Media Mentions</h4>
+        <p>
+            <a href="https://news.lib.berkeley.edu/virtual-reality">Berkeley</a>, 
+            <a href="https://www.nbcnews.com/video/how-diversity-shapes-multiracial-experiences-779076675976">NBC</a>, 
+            <a href="https://www.diablomag.com/October-2019/Virtual-Reality-in-Oakland/">Diablo Magazine</a>, 
+            <a href="https://technical.ly/baltimore/2016/07/21/10-baltimore-built-video-games-worth-playing/">Technical.ly</a>, 
+            <a href="https://technical.ly/baltimore/2016/09/01/voting-now-open-4th-annual-baltimore-innovation-awards/">(x2)</a>
+        </p>
 
-<script>
-// BEGIN H4 TEXT SCRAMBLER (s/o to CodePen, https://codepen.io/khalilliu/pen/RKvZKX)
-  class TextScramble {
-    constructor(el) {
-      this.el = el;
-      this.chars = '!<>-_\\/[]{}—=+*^?#________';
-      this.update = this.update.bind(this);
-    }
+        <!-- Substack -->
+        <h4>Blog</h4>
+        <div class="substack-box-container">
 
-    setText(newText){
-      const oldText = this.el.innerText;
-      const length = Math.max(oldText.length,newText.length);
-      const promise = new Promise((resolve)=>this.resolve = resolve);
-      
-      this.queue = [];
-      for(let i = 0;i<length;i++){
-        const from = oldText[i] || '';
-        const to  = newText[i] || '';
-        const start = Math.floor(Math.random()*40);
-        const end = Math.floor(Math.random()*40) + start;
-        this.queue.push({from,to,start,end});
-      }
-      
-      cancelAnimationFrame(this.frameRequest);
-      this.frame = 0;
-      this.update();
-      return promise;
-    }
-    
-    update() {
-      let output = '';
-      let complete = 0;
-      for(let i=0,n=this.queue.length;i<n;i++){
-        let {from,to,start,end,char} = this.queue[i];
+          <a href="https://btong.substack.com/p/knative-curling-the-knative-broker" class="substack-box-link">
+            <div class="substack-box">
+              <div class="substack-header">
+                <h2 class="substack-title">Knative — Curling the Knative Broker Directly</h2>
+                <p class="substack-date">Nov 10, 2022</p>
+              </div>
+              <p class="substack-description">
+                When using Knative, a developer may want to sometimes directly curl the broker without configuring a source...</p>
+            </div>
+          </a>
         
-        if(this.frame >= end){
-          complete++;
-          output += to;
-        }else if(this.frame >= start){
-          if(!char || Math.random() < 0.28){char = this.randomChar();this.queue[i].char = char;}
-          output += `<span class='dud'>${char}</span>`;
-        }else {
-          output += from;
-        }
-      }
-      this.el.innerHTML = output;
-      if(complete === this.queue.length){this.resolve();}else{
-        this.frameRequest = requestAnimationFrame(this.update);this.frame++;}
-    }
-      
-    randomChar() {
-      return this.chars[Math.floor(Math.random() * this.chars.length)]
-    }
-  }
+          <a href="https://btong.substack.com/p/using-your-ssh-public-key-for-verified" class="substack-box-link">
+            <div class="substack-box">
+              <div class="substack-header">
+                <h2 class="substack-title">SSH Public Keys for Verified GitHub Commits</h2>
+                <p class="substack-date">Aug 25, 2022</p>
+              </div>
+              <p class="substack-description">
+                Here's how to use your SSH Public Key in order to verify GitHub Commits. Most workplaces require it!
+              </p>
+            </div>
+          </a>
 
-  const phrases = [
-    'Bryan Tong',
-    'personal website',
-    '{btong.me}',
-    'software engineer',
-  ]
+          <div class="ellipsis">...</div>
+          <a class="substack-link" href="https://substack.com/@btong">Read all posts on Substack</a>      
 
-  const el = document.querySelector('.text');
-  const fx = new TextScramble(el);
+      </div>
 
-  let counter = 0;
-  let reset = false;
-  const next = () => {
-    if (reset) {
-      fx.setText(phrases[counter])
-    } else {
-      fx.setText(phrases[counter]).then(()=>{
-        setTimeout(next,800)
-      })
-      counter = (counter+1) % phrases.length
-      if (counter == 0) {
-        reset = true;
-      }
-    }
-    //console.log(counter)
-  }
-  next()
-// END JS SCRIPTS
-</script>
+    <!-- Header -->
+    <script src="assets/js/textScramble.js"></script>
+  </body>
 
 </html>
