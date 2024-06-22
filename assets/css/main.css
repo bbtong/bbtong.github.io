@@ -137,7 +137,7 @@ html {
   background-color: rgb(27, 27, 27);
 }
 body {
-  font-size: 1.6em; /* currently ems cause chrome bug misinterpreting rems on body element */
+  font-size: 1.4em; /* currently ems cause chrome bug misinterpreting rems on body element */
   line-height: 1.6;
   font-weight: 400;
   font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -463,99 +463,6 @@ hr {
 #sliding-div p {
   margin: 15px;
   font-size: 0.917em;
-}
-
-/* Substack
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.substack-box-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 600px;
-  margin: 0 auto; /* This will center the box container horizontally */
-}
-
-.substack-box {
-  display: block;
-  width: 100%; /* Make the box take the full width of the container */
-  max-width: 600px; /* But don't let it exceed 600px */
-  background: rgba(255, 255, 255, 0.1);
-  margin: 4px;
-  padding: 20px;
-  border-radius: 4px;
-  transition: background 0.3s ease-in-out;
-  box-sizing: border-box; /* Include padding and border in box's total width and height */
-  text-decoration: none;
-  color: #d2d2d2;
-}
-
-.substack-box:hover {
-  background: #FF6001;
-}
-
-.substack-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.substack-title {
-  font-size: 20px;
-  font-weight: bold;
-  font-family: 'Space Grotesk';
-}
-
-.substack-description {
-  font-size: 16px;
-}
-
-.substack-date {
-  font-size: 14px;
-  color: #999999;
-}
-
-.substack-link {
-  display: block;
-  text-align: center;
-  color: #999999;
-  text-decoration: none;
-}
-
-.ellipsis {
-  text-align: center;
-  font-family: 'Space Grotesk';
-  font-size: 2em; /* Adjust this to change the size of the ellipsis */
-  color: #999999;
-}
-
-/* Professional Summary
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.professional-summary {
-  font-size: 1.8rem;
-  line-height: 1.6;
-  margin-bottom: 2.5rem;
-  color: #EEE;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 20px;
-  border-radius: 4px;
-  transition: background 0.3s ease-in-out;
-}
-
-.professional-summary:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.professional-summary .highlight {
-  color: #A4DDEE;
-  font-weight: 500;
-}
-
-.body-container h4:first-of-type {
-  margin-top: 0;
-}
-
-.professional-summary + h4 {
-  margin-top: 3rem;
 }
 
 /* Clearing
