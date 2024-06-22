@@ -528,6 +528,36 @@ hr {
   color: #999999;
 }
 
+/* Professional Summary
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.professional-summary {
+  font-size: 1.8rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+  color: #EEE;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 4px;
+  transition: background 0.3s ease-in-out;
+}
+
+.professional-summary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.professional-summary .highlight {
+  color: #A4DDEE;
+  font-weight: 500;
+}
+
+.body-container h4:first-of-type {
+  margin-top: 0;
+}
+
+.professional-summary + h4 {
+  margin-top: 3rem;
+}
+
 /* Clearing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -564,4 +594,3 @@ there.
 
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {}
-
