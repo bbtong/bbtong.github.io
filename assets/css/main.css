@@ -186,6 +186,13 @@ p {
   -webkit-text-fill-color: transparent;
 }
 
+.crwd {
+  font-family: 'Nunito', sans-serif;
+  background: -webkit-linear-gradient(60deg, #DDDDDD, #EC0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 
 .anduril {
   font-family: 'Helvetica Now', sans-serif;
@@ -193,9 +200,11 @@ p {
   color: #DDDDDD;
 }
 
-.pivotal {
+.bell {
   font-weight: 600;
-  color: #00AE9E;
+  background: -webkit-linear-gradient(left, #74abea, #005AFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .scrambles {
