@@ -172,6 +172,22 @@ p {
   margin-top: 0; 
 }
 
+p.accent-bar {
+  position: relative;
+  padding-left: 12px;
+}
+
+p.accent-bar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #666;
+  border-radius: 2px;
+}
+
 .unicorn {
   font-family: 'Nunito', sans-serif;
   background: -webkit-linear-gradient(left, #a6f8ff, #ffaabc);
